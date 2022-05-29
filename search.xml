@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>Notes of Pytorch</title>
-      <link href="/2022/05/01/notes-of-pytorch/"/>
-      <url>/2022/05/01/notes-of-pytorch/</url>
+      <title>Chapter 1 Tensors</title>
+      <link href="/2022/05/29/chapter-1-tensors/"/>
+      <url>/2022/05/29/chapter-1-tensors/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h2 id="Reshaping-a-tensor"><a href="#Reshaping-a-tensor" class="headerlink" title="Reshaping a tensor"></a><strong>Reshaping a tensor</strong></h2><p>x&#x3D;torch.arange(10)</p><p>print(x)</p><p># tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</p><p><strong># note that the original x is not modified, but p &#x3D; x.view(2,5) can store the change in variable p.</strong></p><p>print( <strong>x.view(<strong><strong>2</strong></strong>,<strong><strong>5</strong></strong>)</strong>) # two rows with five columns</p><p># tensor([[0, 1, 2, 3, 4],</p><p>​                 [5, 6, 7, 8, 9]])</p><h2 id="Entries-of-a-tensor-can-be-scalar"><a href="#Entries-of-a-tensor-can-be-scalar" class="headerlink" title="Entries of a tensor can be scalar"></a><strong>Entries of a tensor can be scalar</strong></h2><p>A matrix is 2-dimensional Tensor</p><p>A row of a matrix is a 1-dimensional Tensor</p><p>An entry of a matrix is a 0-dimensional Tensor</p><p>0-dimensional Tensor are <strong>scalar</strong>!</p><p>If we want to convert a 0-dimensional Tensor into python number, we need to use <strong>item()</strong></p><p>x &#x3D; torch.Tensor([[1,2,3,4,5],[6,7,8,9,10]])</p><p>a &#x3D; x[0,2] # how to slice a tensor: x[0], x[1:4], etc.</p><p>b &#x3D; a.<strong>item()</strong></p><p>print(a)</p><p>print(type(a))</p><p>print(b)</p><p>print(type(b))</p><p># tensor(3.)</p><p># &lt;class ‘torch.Tensor’&gt;</p><p># 3.0</p><p># &lt;class ‘float’&gt;</p><p># the storage of tensor</p><p>A &#x3D; torch.arange(5) # tensor([0, 1, 2, 3, 4])</p><p>B &#x3D; A[2:]</p><p>print(A.storage().data_ptr())</p><p>print(B.storage().data_ptr())</p><p># 2076006947200</p><p># 2076006947200</p>]]></content>
       
       
       <categories>
@@ -20,11 +20,7 @@
       
         <tags>
             
-            <tag> Machine Learning </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Pytorch </tag>
+            <tag> Tensors </tag>
             
         </tags>
       
