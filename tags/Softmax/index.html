@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Chapter 1 Tensors, Cipher&#39;s Blog">
-    <meta name="description" content="Introduction of Tensors in Pytorch">
+    <meta name="keywords" content="Tag: Softmax, Cipher&#39;s Blog">
+    <meta name="description" content="Cipher&#39;s Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>Chapter 1 Tensors | Cipher&#39;s Blog</title>
+    <title>Tag: Softmax | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -220,365 +220,164 @@
 
 </header>
 
-    
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                Stay hungry. Stay foolish.
+                
+            </div>
 
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">Chapter 1 Tensors</h1>
-                </div>
+            <div class="description center-align">
+                
+                <span id="subtitle"></span>
+                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                <script>
+                    var typed = new Typed("#subtitle", {
+                        strings: [ 
+                            
+                                "从来没有真正的绝境, 只有心灵的迷途",
+                            
+                                "Never really desperate, only the lost of the soul",
+                            
+                        ],
+                        startDelay: 300,
+                        typeSpeed: 100,
+                        loop: true,
+                        backSpeed: 50,
+                        showCursor: true
+                    });
+                </script>
+                
             </div>
         </div>
     </div>
 </div>
 
 
+<script>
+    // 每天切换 banner 图.  Switch banner image every day.
+    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
+    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+</script>
 
 
-<main class="container content">
+    </div>
+</div>
+
+<main class="content">
 
     
-    <!-- 文章内容详情 -->
-<div id="artDetail">
+
+<div id="tags" class="container chip-container">
     <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Tensors/">
-                                <span class="chip bg-color">Tensors</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Pytorch/" class="post-category">
-                                Pytorch
-                            </a>
-                        
-                    </div>
-                    
-                </div>
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fas fa-tags"></i>&nbsp;&nbsp;Post Tags
             </div>
-
-            <div class="post-info">
+            <div class="tag-chips">
                 
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-05-29
-                </div>
                 
-
+                <a href="/tags/Typora/" title="Typora: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Typora" style="background-color: #F9EBEA;">Typora
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
                 
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-05-29
-                </div>
                 
-
+                <a href="/tags/Markdown/" title="Markdown: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Markdown" style="background-color: #F5EEF8;">Markdown
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
                 
-
                 
-
+                <a href="/tags/Tensors/" title="Tensors: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Tensors" style="background-color: #D5F5E3;">Tensors
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
                 
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>Read Count:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
+                
+                <a href="/tags/Vanilla-NN/" title="Vanilla NN: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Vanilla NN" style="background-color: #E8F8F5;">Vanilla NN
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Softmax/" title="Softmax: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            data-tagname="Softmax" style="background-color: #FEF9E7;">Softmax
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Loss/" title="Loss: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Loss" style="background-color: #F8F9F9;">Loss
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
             </div>
         </div>
-        <hr class="clearfix">
-
-        
-
-        
-
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <h2 id="Reshaping-a-tensor"><a href="#Reshaping-a-tensor" class="headerlink" title="Reshaping a tensor"></a><strong>Reshaping a tensor</strong></h2><p>x&#x3D;torch.arange(10)</p>
-<p>print(x)</p>
-<p># tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</p>
-<p><strong># note that the original x is not modified, but p &#x3D; x.view(2,5) can store the change in variable p.</strong></p>
-<p>print( <strong>x.view(<strong><strong>2</strong></strong>,<strong><strong>5</strong></strong>)</strong>) # two rows with five columns</p>
-<p># tensor([[0, 1, 2, 3, 4],</p>
-<p>​                 [5, 6, 7, 8, 9]])</p>
-<h2 id="Entries-of-a-tensor-can-be-scalar"><a href="#Entries-of-a-tensor-can-be-scalar" class="headerlink" title="Entries of a tensor can be scalar"></a><strong>Entries of a tensor can be scalar</strong></h2><p>A matrix is 2-dimensional Tensor</p>
-<p>A row of a matrix is a 1-dimensional Tensor</p>
-<p>An entry of a matrix is a 0-dimensional Tensor</p>
-<p>0-dimensional Tensor are <strong>scalar</strong>!</p>
-<p>If we want to convert a 0-dimensional Tensor into python number, we need to use <strong>item()</strong></p>
-<p>x &#x3D; torch.Tensor([[1,2,3,4,5],[6,7,8,9,10]])</p>
-<p>a &#x3D; x[0,2] # how to slice a tensor: x[0], x[1:4], etc.</p>
-<p>b &#x3D; a.<strong>item()</strong></p>
-<p>print(a)</p>
-<p>print(type(a))</p>
-<p>print(b)</p>
-<p>print(type(b))</p>
-<p># tensor(3.)</p>
-<p># &lt;class ‘torch.Tensor’&gt;</p>
-<p># 3.0</p>
-<p># &lt;class ‘float’&gt;</p>
-<p># the storage of tensor</p>
-<p>A &#x3D; torch.arange(5) # tensor([0, 1, 2, 3, 4])</p>
-<p>B &#x3D; A[2:]</p>
-<p>print(A.storage().data_ptr())</p>
-<p>print(B.storage().data_ptr())</p>
-<p># 2076006947200</p>
-<p># 2076006947200</p>
-
-                
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        Author:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">cipher</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        Link:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/05/29/chapter-1-tensors/">https://dipperbill.github.io/2022/05/29/chapter-1-tensors/</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        Reprint policy:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    All articles in this blog are used except for special statements
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    reprint policy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">cipher</a>
-                    !
-                </span>
-            </div>
-        
     </div>
+</div>
 
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
-        M.toast({html: toastHTML})
-      });
+    
 
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+            
+            
+            <div class="article tag-post col s12 m6 l4" data-tags="Vanilla NN, Softmax, Loss" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2022/05/28/vanilla-neural-networks/">
+                        <div class="card-image tag-image">
                             
-                                <a href="/tags/Tensors/">
-                                    <span class="chip bg-color">Tensors</span>
-                                </a>
                             
+                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Vanilla Neural Networks">
+                            
+                            <span class="card-title">Vanilla Neural Networks</span>
                         </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-
-    
-    <div class="social-share" data-sites="qq,qzone,wechat" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
-</div>
-
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Pytorch/" class="post-category">
+                                Pytorch
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
         </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;Current
-            </div>
-            <div class="card">
-                <a href="/2022/05/29/chapter-1-tensors/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Chapter 1 Tensors">
-                        
-                        <span class="card-title">Chapter 1 Tensors</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Introduction of Tensors in Pytorch
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-29
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Tensors/">
-                        <span class="chip bg-color">Tensors</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/09/07/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            这是你自定义的文章摘要内容
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Markdown/" class="post-category">
-                                    Markdown
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Typora/">
-                        <span class="chip bg-color">Typora</span>
-                    </a>
-                    
-                    <a href="/tags/Markdown/">
-                        <span class="chip bg-color">Markdown</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-    
-
+    </article>
 </main>
 
 
