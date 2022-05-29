@@ -310,30 +310,30 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="torch-softmax-x2F-torch-nn-Softmax"><a href="#torch-softmax-x2F-torch-nn-Softmax" class="headerlink" title="torch.softmax() &#x2F; torch.nn.Softmax()"></a><strong>torch.softmax() &#x2F; torch.nn.Softmax()</strong></h2><p><img src="file:///D:\blog\source\notes_image\1_3_softmax.jpg" alt="img"></p>
-<p>A &#x3D; torch.Tensor( [ [ -2 , -0.5 , 2.0 , 1.5 ] , </p>
-<p>​              [ -2 , -0.5 , 7.0 , 1.5 ] ])</p>
-<p>p &#x3D; torch.<strong>softmax</strong>(A , <strong>dim&#x3D;1</strong>) # over rows</p>
+<p>A &#x3D; torch.Tensor( [ [ -2 , -0.5 , 2.0 , 1.5 ] ,<br>                                [ -2 , -0.5 , 7.0 , 1.5 ] ])</p>
+<p>p &#x3D; torch.softmax(A , <strong>dim&#x3D;1</strong>) # over rows</p>
 <p>print(p)</p>
-<p># tensor([[1.0730e-02, 4.8089e-02, 5.8585e-01, 3.5533e-01],</p>
-<p>​               [1.2282e-04, 5.5046e-04, 9.9526e-01, 4.0674e-03]])</p>
+<p># tensor([[1.0730e-02, 4.8089e-02, 5.8585e-01, 3.5533e-01],<br>                [1.2282e-04, 5.5046e-04, 9.9526e-01, 4.0674e-03]])</p>
 <p>p &#x3D; torch.softmax(A , <strong>dim&#x3D;0</strong>) # over columns</p>
 <p>print(p)</p>
 <p># tensor([[0.5000, 0.5000, 0.0067, 0.5000],</p>
-<p>​               [0.5000, 0.5000, 0.9933, 0.5000]])</p>
+<p>​				[0.5000, 0.5000, 0.9933, 0.5000]])</p>
 <p># <strong>torch.nn.LogSoftmax()</strong> is taking logarithms of the result of softmax(xi)</p>
 <p># also we have torch.nn.Softmax()</p>
 <p>x&#x3D;torch.Tensor([ -2 , -0.5 , 2.0 , 1.5 ])</p>
 <p>p&#x3D;torch.softmax(x, <strong>dim &#x3D;</strong> <strong>0</strong>)</p>
 <p>print(p)</p>
 <p>print(p.size())</p>
-<p>prove that x is stored in one column, although it is represented in one line when typing it on the console.</p>
-<h2 id="nn-Linear"><a href="#nn-Linear" class="headerlink" title="nn.Linear()"></a><strong>nn.Linear()</strong></h2><p><strong>mod &#x3D; nn.Linear(5,3,bias &#x3D; True)</strong> # bias &#x3D; True by default</p>
+<h1 id="prove-that-x-is-stored-in-one-column-although-it-is-represented-in-one-line-when-typing-it-on-the-console"><a href="#prove-that-x-is-stored-in-one-column-although-it-is-represented-in-one-line-when-typing-it-on-the-console" class="headerlink" title="prove that x is stored in one column, although it is represented in one line when typing it on the console."></a>prove that x is stored in one column, although it is represented in one line when typing it on the console.</h1><h2 id="nn-Linear"><a href="#nn-Linear" class="headerlink" title="nn.Linear()"></a><strong>nn.Linear()</strong></h2><p><strong>mod &#x3D; nn.Linear(5,3,bias &#x3D; True)</strong> # bias &#x3D; True by default</p>
 <p>print(mod)</p>
 <p># Linear(in_features&#x3D;5, out_features&#x3D;3, bias&#x3D;True)</p>
 <p># input of size  5 and output of size 3</p>
@@ -473,8 +473,9 @@
 <p>​		# device &#x3D; torch. device&#x3D; torch.device(“cuda”)</p>
 <p>​		# net &#x3D; net.to(device)</p>
 <pre><code>     \# minibatch_data=minibatch_data.to(device)
-
+ 
      \# minibatch_label=minibatch_label.to(device)
+
 
      
 </code></pre>
