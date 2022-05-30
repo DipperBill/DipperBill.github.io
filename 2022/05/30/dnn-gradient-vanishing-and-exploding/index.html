@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Tag: Softmax, Cipher&#39;s Blog">
-    <meta name="description" content="Cipher&#39;s Blog">
+    <meta name="keywords" content="DNN Gradient Vanishing or Exploding, Cipher&#39;s Blog">
+    <meta name="description" content="How do DNN Gradient Vanishing and Exploding happen?">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>Tag: Softmax | Cipher&#39;s Blog</title>
+    <title>DNN Gradient Vanishing or Exploding | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -198,200 +198,355 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                Stay hungry. Stay foolish.
-                
-            </div>
+    
 
-            <div class="description center-align">
-                
-                <span id="subtitle"></span>
-                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: [ 
-                            
-                                "从来没有真正的绝境, 只有心灵的迷途",
-                            
-                                "Never really desperate, only the lost of the soul",
-                            
-                        ],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
-                
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">DNN Gradient Vanishing or Exploding</h1>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + 0 + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
 
 
-    </div>
-</div>
-
-<main class="content">
+<main class="container content">
 
     
-
-<div id="tags" class="container chip-container">
+    <!-- 文章内容详情 -->
+<div id="artDetail">
     <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-tags"></i>&nbsp;&nbsp;Post Tags
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/DNN/">
+                                <span class="chip bg-color">DNN</span>
+                            </a>
+                        
+                            <a href="/tags/Gradient-Vanishing-or-Exploding/">
+                                <span class="chip bg-color">Gradient Vanishing or Exploding</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Pytorch/" class="post-category">
+                                Pytorch
+                            </a>
+                        
+                    </div>
+                    
+                </div>
             </div>
-            <div class="tag-chips">
+
+            <div class="post-info">
                 
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2022-05-30
+                </div>
                 
-                <a href="/tags/Tensors/" title="Tensors: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Tensors" style="background-color: #F9EBEA;">Tensors
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
+
                 
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
+                    2022-05-30
+                </div>
                 
-                <a href="/tags/Vanilla-NN/" title="Vanilla NN: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Vanilla NN" style="background-color: #F5EEF8;">Vanilla NN
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
+
                 
+
                 
-                <a href="/tags/Softmax/" title="Softmax: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            data-tagname="Softmax" style="background-color: #D5F5E3;">Softmax
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
+
                 
-                
-                <a href="/tags/Loss/" title="Loss: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Loss" style="background-color: #E8F8F5;">Loss
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/CNN/" title="CNN: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="CNN" style="background-color: #FEF9E7;">CNN
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/Pooling-and-Unpooling/" title="Pooling and Unpooling: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Pooling and Unpooling" style="background-color: #F8F9F9;">Pooling and Unpooling
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/Dropout/" title="Dropout: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Dropout" style="background-color: #82E0AA;">Dropout
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/Receptive-Field/" title="Receptive Field: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Receptive Field" style="background-color: #D7BDE2;">Receptive Field
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/DNN/" title="DNN: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="DNN" style="background-color: #A3E4D7;">DNN
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/Gradient-Vanishing-or-Exploding/" title="Gradient Vanishing or Exploding: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Gradient Vanishing or Exploding" style="background-color: #85C1E9;">Gradient Vanishing or Exploding
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>Read Count:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
             </div>
         </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="DNN-Gradient-Vanishing-and-Exploding"><a href="#DNN-Gradient-Vanishing-and-Exploding" class="headerlink" title="DNN Gradient Vanishing and Exploding"></a>DNN Gradient Vanishing and Exploding</h2><p>build 2 hidden layer DNN with a output layer</p>
+<p><img src="/2022/05/30/dnn-gradient-vanishing-and-exploding/vanish_1.png"></p>
+<p>loss is function of f3</p>
+<p><img src="/2022/05/30/dnn-gradient-vanishing-and-exploding/vanish_2.png"></p>
+<p>根据上面规律，我们可以把x写成f0，当有n-1层隐层时，fn是输出，如果要求wl也就是第l层的权重，反向传播中涉及的偏导计算为：</p>
+<p><img src="/2022/05/30/dnn-gradient-vanishing-and-exploding/vanish_3.png"></p>
+<p>前半部分是关于激活函数的导数的累乘，后半部分是关于权重值的累乘。</p>
+<p>激活函数如sigmoid函数，其导数的取值范围是(0, 0.25]，当网络层数很深的时候，多个小于1的数进行累乘，结果是趋向于0的，此时梯度反向传播的时候，根据参数更新公式：$$w <em>{l} &#x3D; w</em>{l}-lr·\frac{\partial loss}{\partial w _{l}} $$ ，偏导部分的取值趋于0，那么该参数得不到更新，这就是梯度消失现象。消失的只是更新参数所需要的梯度，而不一定是参数被更新到0。</p>
+<p>关于权重值的累乘，当我们初始化权值很大的时候，多个大于1的数累乘，结果是+∞，此时就出现了梯度爆炸现象。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        Author:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">cipher</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        Link:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://dipperbill.github.io/2022/05/30/dnn-gradient-vanishing-and-exploding/">https://dipperbill.github.io/2022/05/30/dnn-gradient-vanishing-and-exploding/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        Reprint policy:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    All articles in this blog are used except for special statements
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    reprint policy. If reproduced, please indicate source
+                    <a href="/about" target="_blank">cipher</a>
+                    !
+                </span>
+            </div>
+        
     </div>
-</div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/DNN/">
+                                    <span class="chip bg-color">DNN</span>
+                                </a>
+                            
+                                <a href="/tags/Gradient-Vanishing-or-Exploding/">
+                                    <span class="chip bg-color">Gradient Vanishing or Exploding</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
 
     
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            
-            <div class="article tag-post col s12 m6 l4" data-tags="Vanilla NN, Softmax, Loss" data-aos="fade-up">
-                <div class="card">
-                    <a href="/2022/05/28/vanilla-neural-networks/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Vanilla Neural Networks">
-                            
-                            <span class="card-title">Vanilla Neural Networks</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Pytorch/" class="post-category">
-                                Pytorch
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
+</div>
+
                 </div>
             </div>
             
         </div>
-    </article>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
+            <div class="card">
+                <a href="/2022/05/30/dnn-gradient-vanishing-and-exploding/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="DNN Gradient Vanishing or Exploding">
+                        
+                        <span class="card-title">DNN Gradient Vanishing or Exploding</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            How do DNN Gradient Vanishing and Exploding happen?
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Pytorch/" class="post-category">
+                                    Pytorch
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DNN/">
+                        <span class="chip bg-color">DNN</span>
+                    </a>
+                    
+                    <a href="/tags/Gradient-Vanishing-or-Exploding/">
+                        <span class="chip bg-color">Gradient Vanishing or Exploding</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/05/29/dropout/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Dropout">
+                        
+                        <span class="card-title">Dropout</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Dropout Layer
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Pytorch/" class="post-category">
+                                    Pytorch
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Dropout/">
+                        <span class="chip bg-color">Dropout</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    
+
 </main>
 
 
