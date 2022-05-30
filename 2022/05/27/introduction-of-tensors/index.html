@@ -289,38 +289,53 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="Reshaping-a-tensor"><a href="#Reshaping-a-tensor" class="headerlink" title="Reshaping a tensor"></a><strong>Reshaping a tensor</strong></h2><pre class="language-python" data-language="python"><code class="language-python">x<span class="token operator">=</span>torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token comment"># tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span></code></pre>
 
 
 
-<p># tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</p>
-<p><strong># note that the original x is not modified, but p &#x3D; x.view(2,5) can store the change in variable p.</strong></p>
-<p>print( <strong>x.view(<strong><strong>2</strong></strong>,<strong><strong>5</strong></strong>)</strong>) # two rows with five columns</p>
-<p># tensor([[0, 1, 2, 3, 4],</p>
-<p>​                 [5, 6, 7, 8, 9]])</p>
+<p>Note that the original x is not modified, but p &#x3D; x.view(2,5) can store the change in variable p.</p>
+ <pre class="language-pytho" data-language="pytho"><code class="language-pytho">print( x.view(2,5))          
+# two rows with five columns
+# tensor([[0, 1, 2, 3, 4],
+          [5, 6, 7, 8, 9]])</code></pre>
+
+
+
 <h2 id="Entries-of-a-tensor-can-be-scalar"><a href="#Entries-of-a-tensor-can-be-scalar" class="headerlink" title="Entries of a tensor can be scalar"></a><strong>Entries of a tensor can be scalar</strong></h2><p>A matrix is 2-dimensional Tensor</p>
 <p>A row of a matrix is a 1-dimensional Tensor</p>
 <p>An entry of a matrix is a 0-dimensional Tensor</p>
-<p>0-dimensional Tensor are <strong>scalar</strong>!</p>
+<p>0-dimensional Tensor are <strong>scalar</strong></p>
 <p>If we want to convert a 0-dimensional Tensor into python number, we need to use <strong>item()</strong></p>
-<p>x &#x3D; torch.Tensor([[1,2,3,4,5],[6,7,8,9,10]])</p>
-<p>a &#x3D; x[0,2] # how to slice a tensor: x[0], x[1:4], etc.</p>
-<p>b &#x3D; a.<strong>item()</strong></p>
-<p>print(a)</p>
-<p>print(type(a))</p>
-<p>print(b)</p>
-<p>print(type(b))</p>
-<p># tensor(3.)</p>
-<p># &lt;class ‘torch.Tensor’&gt;</p>
-<p># 3.0</p>
-<p># &lt;class ‘float’&gt;</p>
-<p># the storage of tensor</p>
-<p>A &#x3D; torch.arange(5) # tensor([0, 1, 2, 3, 4])</p>
-<p>B &#x3D; A[2:]</p>
-<p>print(A.storage().data_ptr())</p>
-<p>print(B.storage().data_ptr())</p>
-<p># 2076006947200</p>
-<p># 2076006947200</p>
+ <pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+a <span class="token operator">=</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token comment"># how to slice a tensor: x[0], x[1:4], etc.</span>
+b <span class="token operator">=</span> a<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># tensor(3.)</span>
+<span class="token comment"># &lt;class 'torch.Tensor'></span>
+<span class="token comment"># 3.0</span>
+<span class="token comment"># &lt;class 'float'></span></code></pre>
+
+
+
+<h2 id="The-Storage-of-Tensors"><a href="#The-Storage-of-Tensors" class="headerlink" title="The Storage of Tensors"></a><strong>The Storage of Tensors</strong></h2><pre class="language-python" data-language="python"><code class="language-python">A <span class="token operator">=</span> torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment"># tensor([0, 1, 2, 3, 4])</span>
+B <span class="token operator">=</span> A<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>A<span class="token punctuation">.</span>storage<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>data_ptr<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>B<span class="token punctuation">.</span>storage<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>data_ptr<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 2076006947200</span>
+<span class="token comment"># 2076006947200</span></code></pre>
+
+
+
+
+
 
                 
             </div>
@@ -492,49 +507,46 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
+                Current&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/07/hello-world/">
+                <a href="/2022/05/27/introduction-of-tensors/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Introduction of Tensors">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">Introduction of Tensors</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这是你自定义的文章摘要内容
+                            Introduction of Tensors in Pytorch
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-27
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Markdown/" class="post-category">
-                                    Markdown
+                            <a href="/categories/Pytorch/" class="post-category">
+                                    Pytorch
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Typora/">
-                        <span class="chip bg-color">Typora</span>
-                    </a>
-                    
-                    <a href="/tags/Markdown/">
-                        <span class="chip bg-color">Markdown</span>
+                    <a href="/tags/Tensors/">
+                        <span class="chip bg-color">Tensors</span>
                     </a>
                     
                 </div>
