@@ -217,10 +217,104 @@
 
 
 
-<main class="container content">
+<main class="post-container content">
 
     
-    <!-- 文章内容详情 -->
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -293,14 +387,37 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="DNN-Gradient-Vanishing-and-Exploding"><a href="#DNN-Gradient-Vanishing-and-Exploding" class="headerlink" title="DNN Gradient Vanishing and Exploding"></a>DNN Gradient Vanishing and Exploding</h2><p>build 2 hidden layer DNN with a output layer</p>
-<p><img src="/2022/05/30/dnn-gradient-vanishing-and-exploding/vanish_1.png"></p>
+<p><img src="/vanish_1.png"></p>
 <p>loss is function of f3</p>
-<p><img src="/2022/05/30/dnn-gradient-vanishing-and-exploding/vanish_2.png"></p>
+<p><img src="/vanish_2.png"></p>
 <p>根据上面规律，我们可以把x写成f0，当有n-1层隐层时，fn是输出，如果要求wl也就是第l层的权重，反向传播中涉及的偏导计算为：</p>
-<p><img src="/2022/05/30/dnn-gradient-vanishing-and-exploding/vanish_3.png"></p>
+<p><img src="/vanish_3.png"></p>
 <p>前半部分是关于激活函数的导数的累乘，后半部分是关于权重值的累乘。</p>
 <p>激活函数如sigmoid函数，其导数的取值范围是(0, 0.25]，当网络层数很深的时候，多个小于1的数进行累乘，结果是趋向于0的，此时梯度反向传播的时候，根据参数更新公式：$$w <em>{l} &#x3D; w</em>{l}-lr·\frac{\partial loss}{\partial w _{l}} $$ ，偏导部分的取值趋于0，那么该参数得不到更新，这就是梯度消失现象。消失的只是更新参数所需要的梯度，而不一定是参数被更新到0。</p>
 <p>关于权重值的累乘，当我们初始化权值很大的时候，多个大于1的数累乘，结果是+∞，此时就出现了梯度爆炸现象。</p>
+<h2 id="NN-detach"><a href="#NN-detach" class="headerlink" title="NN: detach()"></a><strong>NN: detach()</strong></h2><p>detach()是生成了一个新的variable，detach_()是对本身的更改，</p>
+<p>detach()</p>
+<p>（1）返回一个<strong>新的从当前图中分离</strong>的Variable。</p>
+<p>（2）返回的 Variable 不会梯度更新</p>
+<p>（3）被detach()的相当于**with torch.no_grad()**操作</p>
+<p>（4）返回的Variable和被detach的Variable指向同一个tensor</p>
+<pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	y <span class="token operator">=</span> x <span class="token operator">*</span> <span class="token number">2</span>
+
+<span class="token operator">>></span><span class="token operator">></span> y<span class="token punctuation">.</span>requires_grad
+<span class="token boolean">False</span></code></pre>
+
+
+
+
+
+
+
+<h2 id="NN-detach-1"><a href="#NN-detach-1" class="headerlink" title="NN: detach_()"></a><strong>NN: detach_()</strong></h2><p>Detach_()</p>
+<p>（1）将<strong>一个Variable</strong>从创建它的图中分离，并把它设置成<strong>叶子Variable</strong>。</p>
+<p>（2）将中间节点的grad_fn的值设置为None时，这样中间节点就不会再与前一个节点关联，此时的中间节点就变成了叶子节点。</p>
+<p>（3）将中间节点的requires_grad设置为False，这样对后面节点进行backward()时就不会对中间节点求梯度</p>
 
                 
             </div>
@@ -327,7 +444,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/05/30/dnn-gradient-vanishing-and-exploding/">https://dipperbill.github.io/2022/05/30/dnn-gradient-vanishing-and-exploding/</a>
+                    <a href="https://dipperbill.github.io/2022/05/30/dnn-gradient-vanishing-or-exploding/">https://dipperbill.github.io/2022/05/30/dnn-gradient-vanishing-or-exploding/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -423,7 +540,7 @@
                 <i class="far fa-dot-circle"></i>&nbsp;Current
             </div>
             <div class="card">
-                <a href="/2022/05/30/dnn-gradient-vanishing-and-exploding/">
+                <a href="/2022/05/30/dnn-gradient-vanishing-or-exploding/">
                     <div class="card-image">
                         
                         
@@ -544,6 +661,87 @@
 
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
 
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
 
     
 
