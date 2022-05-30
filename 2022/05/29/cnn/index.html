@@ -331,6 +331,10 @@
                                 <span class="chip bg-color">Pooling and Unpooling</span>
                             </a>
                         
+                            <a href="/tags/Receptive-Field/">
+                                <span class="chip bg-color">Receptive Field</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -396,7 +400,7 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
 <p>output: 5 activation maps —— 5个激活映射，每个filter都会产生一个，所以有5个filters</p>
 <p>filters are 3x3, padding with one layer of zero to not shrink anything</p>
 <h2 id="Receptive-Field"><a href="#Receptive-Field" class="headerlink" title="Receptive Field"></a><strong>Receptive Field</strong></h2><p>感受野（Receptive Field）的定义是卷积神经网络每一层输出的特征图（feature map）上的像素点在输入图片上映射的区域大小。再通俗点的解释是，特征图上的一个点对应输入图上的区域，如图。</p>
-<p><img src="/2022/05/29/cnn/clip_image002.jpg" alt="Receptive Field"></p>
+<p>![Receptive Field](receptive field.jpg)</p>
 <p>两个3*3卷积层的串联相当于1个5*5的卷积层，3个3*3的卷积层串联相当于1个7*7的卷积层，即<strong>3个3*3卷积层的感受野大小相当于1个7*7的卷积层</strong>。但是3个3*3的卷积层参数量只有<strong>7*7</strong>的一半左右，同时前者可以有<strong>3个</strong>非线性操作，而后者<strong>只有1个</strong>非线性操作，这样使得前者对于特征的学习能力更强。</p>
 <h2 id="Pooling-Layer"><a href="#Pooling-Layer" class="headerlink" title="Pooling Layer"></a><strong>Pooling Layer</strong></h2><p>Make a pooling module</p>
 <p>inputs: activation maps of size n x n</p>
@@ -410,9 +414,9 @@ self<span class="token punctuation">.</span>pool1 <span class="token operator">=
 
 
 
-<h2 id="Unpooling-layer"><a href="#Unpooling-layer" class="headerlink" title="Unpooling layer"></a><strong>Unpooling layer</strong></h2><p><img src="/2022/05/29/cnn/clip_image004.jpg" alt="Bed of Nails"></p>
-<p><img src="/2022/05/29/cnn/clip_image006.jpg" alt="Nearest Neighbor"></p>
-<p><img src="/2022/05/29/cnn/clip_image008.jpg" alt="Max Unpooling"></p>
+<h2 id="Unpooling-layer"><a href="#Unpooling-layer" class="headerlink" title="Unpooling layer"></a><strong>Unpooling layer</strong></h2><p>![Bed of Nails](Bed of Nails.jpg)</p>
+<p>![Nearest Neighbor](Nearest Neighbor.jpg)</p>
+<p>![Max Unpooling](Max Unpooling.jpg)</p>
 
                 
             </div>
@@ -485,6 +489,10 @@ self<span class="token punctuation">.</span>pool1 <span class="token operator">=
                                     <span class="chip bg-color">Pooling and Unpooling</span>
                                 </a>
                             
+                                <a href="/tags/Receptive-Field/">
+                                    <span class="chip bg-color">Receptive Field</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -530,30 +538,29 @@ self<span class="token punctuation">.</span>pool1 <span class="token operator">=
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;Current
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2022/05/29/cnn/">
+                <a href="/2022/05/30/dropout/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="CNN">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Dropout">
                         
-                        <span class="card-title">CNN</span>
+                        <span class="card-title">Dropout</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Build and Train Vanilla NN in mini Batch
+                            Dropout Layer
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-29
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-30
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -566,16 +573,11 @@ self<span class="token punctuation">.</span>pool1 <span class="token operator">=
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CNN/">
-                        <span class="chip bg-color">CNN</span>
-                    </a>
-                    
-                    <a href="/tags/Pooling-and-Unpooling/">
-                        <span class="chip bg-color">Pooling and Unpooling</span>
+                    <a href="/tags/Dropout/">
+                        <span class="chip bg-color">Dropout</span>
                     </a>
                     
                 </div>
