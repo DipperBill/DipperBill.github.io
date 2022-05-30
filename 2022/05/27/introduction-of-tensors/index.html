@@ -288,10 +288,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Reshaping-a-tensor"><a href="#Reshaping-a-tensor" class="headerlink" title="Reshaping a tensor"></a><strong>Reshaping a tensor</strong></h2><pre class="language-python" data-language="python"><code class="language-python">x<span class="token operator">=</span>torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+                <h2 id="Reshaping-a-tensor"><a href="#Reshaping-a-tensor" class="headerlink" title="Reshaping a tensor"></a><strong>Reshaping a tensor</strong></h2><pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
 <span class="token comment"># tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) </span></code></pre>
 
+<p>​        </p>
 <p>Note that the original x is not modified, but p &#x3D; x.view(2,5) can store the change in variable p.</p>
  <pre class="language-pytho" data-language="pytho"><code class="language-pytho">print(x.view(2,5))          
 # two rows with five columns
