@@ -217,104 +217,10 @@
 
 
 
-<main class="post-container content">
+<main class="container content">
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        padding-bottom: 30px;
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
+    <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -323,12 +229,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/CNN/">
-                                <span class="chip bg-color">CNN</span>
-                            </a>
-                        
-                            <a href="/tags/Pooling-and-Unpooling/">
-                                <span class="chip bg-color">Pooling and Unpooling</span>
+                            <a href="/tags/Dropout/">
+                                <span class="chip bg-color">Dropout</span>
                             </a>
                         
                     </div>
@@ -386,32 +288,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-Convolutional-Layer"><a href="#1-Convolutional-Layer" class="headerlink" title="1.Convolutional Layer"></a><strong>1.Convolutional Layer</strong></h2><p>Make a convolutional module:</p>
- <pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">torch</span><span class="token punctuation">.</span>nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> dilation<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> groups<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-<span class="token comment"># 前三个参数必填</span>
-mod <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">2</span> <span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span></code></pre>
+                <h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a><strong>Dropout</strong></h2><p>一般出现在<strong>全连接层</strong>后，防止模型过拟合。</p>
+<p>神经网络的输入单元是否归零服从<strong>伯努利分布</strong>，并以概率p随机地将神经网络的某个单元的输出（对下一层而言是输入）置为0。</p>
+<p>在训练中，每个隐层的神经元先乘以概率P，然后再进行激活。</p>
+<p>在测试中，所有的神经元先进行激活，然后每个隐层神经元的输出乘P。</p>
+<p><img src="/clip_image002.jpg" alt="img"></p>
+ <pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">NeuralNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>NeuralNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>fc1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">)</span> 
+        self<span class="token punctuation">.</span>relu <span class="token operator">=</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>fc2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span> 
+        self<span class="token punctuation">.</span>dropout <span class="token operator">=</span> nn<span class="token punctuation">.</span>Dropout<span class="token punctuation">(</span>p<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token comment"># dropout训练</span>
+	
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc1<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>dropout<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc2<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> out
+    
+model <span class="token operator">=</span> NeuralNet<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span></code></pre>
 
-<p>inputs: 2 channels ——every channel is a feature map, 灰度图片只有一个feature map；彩色图片一般3个feature map（RGB）</p>
-<p>output: 5 activation maps —— 5个激活映射，每个filter都会产生一个，所以有5个filters</p>
-<p>filters are 3x3, padding with one layer of zero to not shrink anything</p>
-<h2 id="2-Receptive-Field"><a href="#2-Receptive-Field" class="headerlink" title="2.Receptive Field"></a><strong>2.Receptive Field</strong></h2><p>感受野（Receptive Field）的定义是卷积神经网络每一层输出的特征图（feature map）上的像素点在输入图片上映射的区域大小。再通俗点的解释是，特征图上的一个点对应输入图上的区域，如图。</p>
-<p><img src="/clip_image002.jpg" alt="Receptive Field"></p>
-<p>两个3*3卷积层的串联相当于1个5*5的卷积层，3个3*3的卷积层串联相当于1个7*7的卷积层，即<strong>3个3*3卷积层的感受野大小相当于1个7*7的卷积层</strong>。但是3个3*3的卷积层参数量只有<strong>7*7</strong>的一半左右，同时前者可以有<strong>3个</strong>非线性操作，而后者<strong>只有1个</strong>非线性操作，这样使得前者对于特征的学习能力更强。</p>
-<h2 id="3-Pooling-Layer"><a href="#3-Pooling-Layer" class="headerlink" title="3.Pooling Layer"></a><strong>3.Pooling Layer</strong></h2><p>Make a pooling module</p>
-<p>inputs: activation maps of size n x n</p>
-<p>output: activation maps of size n&#x2F;p x n&#x2F;p</p>
-<p>p: pooling size, in this case p &#x3D;&#x3D; 2</p>
- <pre class="language-python" data-language="python"><code class="language-python">mod <span class="token operator">=</span> nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>    <span class="token comment"># max pooling</span>
-<span class="token comment"># block 1: 3 x 32 x 32 --> 64 x 16 x 16    </span>
-   self<span class="token punctuation">.</span>conv1a <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span>  <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span>
-   self<span class="token punctuation">.</span>conv1b <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span>
-   self<span class="token punctuation">.</span>pool1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span></code></pre>
 
 
-
-<h2 id="4-Unpooling-layer"><a href="#4-Unpooling-layer" class="headerlink" title="4.Unpooling layer"></a><strong>4.Unpooling layer</strong></h2><p><img src="/clip_image004.jpg" alt="img"></p>
-<p><img src="/clip_image006.jpg" alt="img"></p>
-<p><img src="/clip_image008.jpg" alt="img"></p>
+<h3 id="启用BN层-Batch-Normalization-和-Dropout"><a href="#启用BN层-Batch-Normalization-和-Dropout" class="headerlink" title="启用BN层(Batch Normalization) 和 Dropout"></a>启用BN层(Batch Normalization) 和 Dropout</h3><p>需要在训练时添加model.train()。model.train()是保证BN层能够用到每一批数据的均值和方差。对于Dropout，model.train()是随机取一部分网络连接来训练更新参数。</p>
+<h3 id="不启用-Batch-Normalization-和-Dropout"><a href="#不启用-Batch-Normalization-和-Dropout" class="headerlink" title="不启用 Batch Normalization 和 Dropout"></a>不启用 Batch Normalization 和 Dropout</h3><p>如果模型中有BN层(Batch Normalization）和Dropout，在测试时添加model.eval()。model.eval()是保证BN层能够用全部训练数据的均值和方差，即测试过程中要保证BN层的均值和方差不变。对于Dropout, model.eval()是利用到了所有网络连接，即不进行随机舍弃神经元。</p>
+<p>训练完train样本后，生成的模型model要用来测试样本。在model(test)之前，需要加上model.eval()，否则的话，有输入数据，即使不训练，它也会改变权值。这是model中含有BN层和Dropout所带来的的性质。</p>
 
                 
             </div>
@@ -438,7 +341,7 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/05/28/cnn/cnn/">https://dipperbill.github.io/2022/05/28/cnn/cnn/</a>
+                    <a href="https://dipperbill.github.io/2022/05/28/dropout/">https://dipperbill.github.io/2022/05/28/dropout/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -476,12 +379,8 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/CNN/">
-                                    <span class="chip bg-color">CNN</span>
-                                </a>
-                            
-                                <a href="/tags/Pooling-and-Unpooling/">
-                                    <span class="chip bg-color">Pooling and Unpooling</span>
+                                <a href="/tags/Dropout/">
+                                    <span class="chip bg-color">Dropout</span>
                                 </a>
                             
                         </div>
@@ -529,64 +428,9 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;Current
-            </div>
-            <div class="card">
-                <a href="/2022/05/28/cnn/cnn/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="CNN">
-                        
-                        <span class="card-title">CNN</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Build and Train Vanilla NN in mini Batch
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/CNN/">
-                        <span class="chip bg-color">CNN</span>
-                    </a>
-                    
-                    <a href="/tags/Pooling-and-Unpooling/">
-                        <span class="chip bg-color">Pooling and Unpooling</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
                 <a href="/2022/05/28/vanilla-neural-networks/">
                     <div class="card-image">
@@ -604,9 +448,9 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -639,6 +483,55 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
             </div>
         </div>
         
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/05/27/introduction-of-tensors/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Introduction of Tensors">
+                        
+                        <span class="card-title">Introduction of Tensors</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Introduction of Tensors in Pytorch
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Pytorch/" class="post-category">
+                                    Pytorch
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Tensors/">
+                        <span class="chip bg-color">Tensors</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
     </div>
 </article>
 
@@ -663,87 +556,6 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
 
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
 
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card" style="background-color: white;">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
 
     
 

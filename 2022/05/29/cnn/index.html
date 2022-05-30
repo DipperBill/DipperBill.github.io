@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Introduction of Tensors, Cipher&#39;s Blog">
-    <meta name="description" content="Introduction of Tensors in Pytorch">
+    <meta name="keywords" content="CNN, Cipher&#39;s Blog">
+    <meta name="description" content="Build and Train Vanilla NN in mini Batch">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>Introduction of Tensors | Cipher&#39;s Blog</title>
+    <title>CNN | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -202,12 +202,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Introduction of Tensors</h1>
+                    <h1 class="description center-align post-title">CNN</h1>
                 </div>
             </div>
         </div>
@@ -323,8 +323,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Tensors/">
-                                <span class="chip bg-color">Tensors</span>
+                            <a href="/tags/CNN/">
+                                <span class="chip bg-color">CNN</span>
+                            </a>
+                        
+                            <a href="/tags/Pooling-and-Unpooling/">
+                                <span class="chip bg-color">Pooling and Unpooling</span>
                             </a>
                         
                     </div>
@@ -348,7 +352,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-05-27
+                    2022-05-29
                 </div>
                 
 
@@ -382,49 +386,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-Reshaping-a-tensor"><a href="#1-Reshaping-a-tensor" class="headerlink" title="1.Reshaping a tensor"></a><strong>1.Reshaping a tensor</strong></h2><pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-<span class="token comment"># tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) </span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>          
-<span class="token comment"># two rows with five columns</span>
-<span class="token comment"># tensor([[0, 1, 2, 3, 4],</span>
-          <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+                <h2 id="Convolutional-Layer"><a href="#Convolutional-Layer" class="headerlink" title="Convolutional Layer"></a><strong>Convolutional Layer</strong></h2><p>Make a convolutional module:</p>
+ <pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">torch</span><span class="token punctuation">.</span>nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token punctuation">,</span> 
+                      stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> dilation<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> groups<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token comment"># 前三个参数必填</span>
+mod <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">2</span> <span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span></code></pre>
 
-<p>Note that the original x is not modified, but p &#x3D; x.view(2,5) can store the change in variable p.</p>
-<h2 id="2-Entries-of-a-tensor-can-be-scalar"><a href="#2-Entries-of-a-tensor-can-be-scalar" class="headerlink" title="2.Entries of a tensor can be scalar"></a><strong>2.Entries of a tensor can be scalar</strong></h2><p>A matrix is 2-dimensional Tensor</p>
-<p>A row of a matrix is a 1-dimensional Tensor</p>
-<p>An entry of a matrix is a 0-dimensional Tensor</p>
-<p>0-dimensional Tensor are <strong>scalar</strong></p>
-<p>If we want to convert a 0-dimensional Tensor into python number, we need to use <strong>item()</strong></p>
- <pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-a <span class="token operator">=</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token comment"># how to slice a tensor: x[0], x[1:4], etc.</span>
-b <span class="token operator">=</span> a<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token comment"># tensor(3.)</span>
-<span class="token comment"># &lt;class 'torch.Tensor'></span>
-<span class="token comment"># 3.0</span>
-<span class="token comment"># &lt;class 'float'></span></code></pre>
+<p>inputs: 2 channels ——every channel is a feature map, 灰度图片只有一个feature map；彩色图片一般3个feature map（RGB）</p>
+<p>output: 5 activation maps —— 5个激活映射，每个filter都会产生一个，所以有5个filters</p>
+<p>filters are 3x3, padding with one layer of zero to not shrink anything</p>
+<h2 id="Receptive-Field"><a href="#Receptive-Field" class="headerlink" title="Receptive Field"></a><strong>Receptive Field</strong></h2><p>感受野（Receptive Field）的定义是卷积神经网络每一层输出的特征图（feature map）上的像素点在输入图片上映射的区域大小。再通俗点的解释是，特征图上的一个点对应输入图上的区域，如图。</p>
+<p><img src="/2022/05/29/cnn/clip_image002.jpg" alt="Receptive Field"></p>
+<p>两个3*3卷积层的串联相当于1个5*5的卷积层，3个3*3的卷积层串联相当于1个7*7的卷积层，即<strong>3个3*3卷积层的感受野大小相当于1个7*7的卷积层</strong>。但是3个3*3的卷积层参数量只有<strong>7*7</strong>的一半左右，同时前者可以有<strong>3个</strong>非线性操作，而后者<strong>只有1个</strong>非线性操作，这样使得前者对于特征的学习能力更强。</p>
+<h2 id="Pooling-Layer"><a href="#Pooling-Layer" class="headerlink" title="Pooling Layer"></a><strong>Pooling Layer</strong></h2><p>Make a pooling module</p>
+<p>inputs: activation maps of size n x n</p>
+<p>output: activation maps of size n&#x2F;p x n&#x2F;p</p>
+<p>p: pooling size, in this case p &#x3D;&#x3D; 2</p>
+ <pre class="language-python" data-language="python"><code class="language-python">mod <span class="token operator">=</span> nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>    <span class="token comment"># max pooling</span>
+<span class="token comment"># block 1: 3 x 32 x 32 --> 64 x 16 x 16    </span>
+self<span class="token punctuation">.</span>conv1a <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span>  <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span>
+self<span class="token punctuation">.</span>conv1b <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span>
+self<span class="token punctuation">.</span>pool1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span></code></pre>
 
 
 
-<h2 id="3-The-Storage-of-Tensors"><a href="#3-The-Storage-of-Tensors" class="headerlink" title="3.The Storage of Tensors"></a><strong>3.The Storage of Tensors</strong></h2><pre class="language-python" data-language="python"><code class="language-python">A <span class="token operator">=</span> torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment"># tensor([0, 1, 2, 3, 4])</span>
-B <span class="token operator">=</span> A<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span>A<span class="token punctuation">.</span>storage<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>data_ptr<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>B<span class="token punctuation">.</span>storage<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>data_ptr<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token comment"># 2076006947200</span>
-<span class="token comment"># 2076006947200</span></code></pre>
-
-
-
-
-
+<h2 id="Unpooling-layer"><a href="#Unpooling-layer" class="headerlink" title="Unpooling layer"></a><strong>Unpooling layer</strong></h2><p><img src="/2022/05/29/cnn/clip_image004.jpg" alt="Bed of Nails"></p>
+<p><img src="/2022/05/29/cnn/clip_image006.jpg" alt="Nearest Neighbor"></p>
+<p><img src="/2022/05/29/cnn/clip_image008.jpg" alt="Max Unpooling"></p>
 
                 
             </div>
@@ -451,7 +439,7 @@ B <span class="token operator">=</span> A<span class="token punctuation">[</span
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/05/27/introduction-of-tensors/">https://dipperbill.github.io/2022/05/27/introduction-of-tensors/</a>
+                    <a href="https://dipperbill.github.io/2022/05/29/cnn/">https://dipperbill.github.io/2022/05/29/cnn/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -489,8 +477,12 @@ B <span class="token operator">=</span> A<span class="token punctuation">[</span
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Tensors/">
-                                    <span class="chip bg-color">Tensors</span>
+                                <a href="/tags/CNN/">
+                                    <span class="chip bg-color">CNN</span>
+                                </a>
+                            
+                                <a href="/tags/Pooling-and-Unpooling/">
+                                    <span class="chip bg-color">Pooling and Unpooling</span>
                                 </a>
                             
                         </div>
@@ -538,11 +530,12 @@ B <span class="token operator">=</span> A<span class="token punctuation">[</span
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2022/05/28/dropout/">
+                <a href="/2022/05/29/cnn/">
                     <div class="card-image">
                         
                         
@@ -558,57 +551,8 @@ B <span class="token operator">=</span> A<span class="token punctuation">[</span
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Dropout/">
-                        <span class="chip bg-color">Dropout</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/05/27/introduction-of-tensors/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Introduction of Tensors">
-                        
-                        <span class="card-title">Introduction of Tensors</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Introduction of Tensors in Pytorch
-                        
-                    </div>
-                    <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-29
                             </span>
                         <span class="publish-author">
                             
@@ -626,8 +570,69 @@ B <span class="token operator">=</span> A<span class="token punctuation">[</span
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Tensors/">
-                        <span class="chip bg-color">Tensors</span>
+                    <a href="/tags/CNN/">
+                        <span class="chip bg-color">CNN</span>
+                    </a>
+                    
+                    <a href="/tags/Pooling-and-Unpooling/">
+                        <span class="chip bg-color">Pooling and Unpooling</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/05/28/vanilla-neural-networks/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Vanilla Neural Networks">
+                        
+                        <span class="card-title">Vanilla Neural Networks</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Build and Train Vanilla NN in mini Batch
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Pytorch/" class="post-category">
+                                    Pytorch
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Vanilla-NN/">
+                        <span class="chip bg-color">Vanilla NN</span>
+                    </a>
+                    
+                    <a href="/tags/Softmax/">
+                        <span class="chip bg-color">Softmax</span>
+                    </a>
+                    
+                    <a href="/tags/Loss/">
+                        <span class="chip bg-color">Loss</span>
                     </a>
                     
                 </div>
