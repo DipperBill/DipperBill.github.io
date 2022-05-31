@@ -359,7 +359,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-05-30
+                    2022-05-31
                 </div>
                 
 
@@ -386,12 +386,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="DNN-Gradient-Vanishing-and-Exploding"><a href="#DNN-Gradient-Vanishing-and-Exploding" class="headerlink" title="DNN Gradient Vanishing and Exploding"></a>DNN Gradient Vanishing and Exploding</h2><p>build 2 hidden layer DNN with a output layer</p>
-<p><img src="/vanish_1.png"></p>
+                <h2 id="DNN-Gradient-Vanishing-or-Exploding"><a href="#DNN-Gradient-Vanishing-or-Exploding" class="headerlink" title="DNN Gradient Vanishing or Exploding"></a>DNN Gradient Vanishing or Exploding</h2><p>build 2 hidden layer DNN with a output layer</p>
+<p><img src="/2022/05/30/dnn-gradient-vanishing-or-exploding/vanish_1.png"></p>
 <p>loss is function of f3</p>
-<p><img src="/vanish_2.png"></p>
+<p><img src="/2022/05/30/dnn-gradient-vanishing-or-exploding/vanish_2.png"></p>
 <p>根据上面规律，我们可以把x写成f0，当有n-1层隐层时，fn是输出，如果要求wl也就是第l层的权重，反向传播中涉及的偏导计算为：</p>
-<p><img src="/vanish_3.png"></p>
+<p><img src="/2022/05/30/dnn-gradient-vanishing-or-exploding/vanish_3.png"></p>
 <p>前半部分是关于激活函数的导数的累乘，后半部分是关于权重值的累乘。</p>
 <p>激活函数如sigmoid函数，其导数的取值范围是(0, 0.25]，当网络层数很深的时候，多个小于1的数进行累乘，结果是趋向于0的，此时梯度反向传播的时候，根据参数更新公式：$$w <em>{l} &#x3D; w</em>{l}-lr·\frac{\partial loss}{\partial w _{l}} $$ ，偏导部分的取值趋于0，那么该参数得不到更新，这就是梯度消失现象。消失的只是更新参数所需要的梯度，而不一定是参数被更新到0。</p>
 <p>关于权重值的累乘，当我们初始化权值很大的时候，多个大于1的数累乘，结果是+∞，此时就出现了梯度爆炸现象。</p>
@@ -531,52 +531,46 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;Current
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2022/05/30/dnn-gradient-vanishing-or-exploding/">
+                <a href="/2022/05/31/lc-slicing-of-list/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="DNN Gradient Vanishing or Exploding">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="LC Slicing of List">
                         
-                        <span class="card-title">DNN Gradient Vanishing or Exploding</span>
+                        <span class="card-title">LC Slicing of List</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            What is Gradient Vanishing? Exploding?
+                            Basic grammar of Python about Slicing
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-31
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
+                            <a href="/categories/Leetcode/" class="post-category">
+                                    Leetcode
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/DNN/">
-                        <span class="chip bg-color">DNN</span>
-                    </a>
-                    
-                    <a href="/tags/Gradient/">
-                        <span class="chip bg-color">Gradient</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
                 </div>
@@ -602,7 +596,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Dropout Layer
+                            What is Dropout?
                         
                     </div>
                     <div class="publish-info">

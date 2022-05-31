@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Dropout, Cipher&#39;s Blog">
-    <meta name="description" content="What is Dropout?">
+    <meta name="keywords" content="LC Dynamic Programming, Cipher&#39;s Blog">
+    <meta name="description" content="Dynamic Programming problem in LC">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>Dropout | Cipher&#39;s Blog</title>
+    <title>LC Dynamic Programming | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -202,12 +202,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Dropout</h1>
+                    <h1 class="description center-align post-title">LC Dynamic Programming</h1>
                 </div>
             </div>
         </div>
@@ -229,8 +229,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Dropout/">
-                                <span class="chip bg-color">Dropout</span>
+                            <a href="/tags/Python/">
+                                <span class="chip bg-color">Python</span>
+                            </a>
+                        
+                            <a href="/tags/Dynamic-Programming/">
+                                <span class="chip bg-color">Dynamic Programming</span>
                             </a>
                         
                     </div>
@@ -241,8 +245,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Pytorch/" class="post-category">
-                                Pytorch
+                            <a href="/categories/Leetcode/" class="post-category">
+                                Leetcode
                             </a>
                         
                     </div>
@@ -254,7 +258,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-05-29
+                    2022-05-31
                 </div>
                 
 
@@ -288,33 +292,101 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a><strong>Dropout</strong></h2><p>一般出现在<strong>全连接层</strong>后，防止模型过拟合。</p>
-<p>神经网络的输入单元是否归零服从<strong>伯努利分布</strong>，并以概率p随机地将神经网络的某个单元的输出（对下一层而言是输入）置为0。</p>
-<p>在训练中，每个隐层的神经元先乘以概率P，然后再进行激活。</p>
-<p>在测试中，所有的神经元先进行激活，然后每个隐层神经元的输出乘P。</p>
-<p><img src="/2022/05/29/dropout/dropout.jpg"></p>
- <pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">NeuralNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-	<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token builtin">super</span><span class="token punctuation">(</span>NeuralNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>fc1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">)</span> 
-        self<span class="token punctuation">.</span>relu <span class="token operator">=</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>fc2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span> 
-        self<span class="token punctuation">.</span>dropout <span class="token operator">=</span> nn<span class="token punctuation">.</span>Dropout<span class="token punctuation">(</span>p<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token comment"># dropout训练</span>
-	
-    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc1<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>dropout<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-        out <span class="token operator">=</span> self<span class="token punctuation">.</span>fc2<span class="token punctuation">(</span>out<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> out
-    
-model <span class="token operator">=</span> NeuralNet<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span></code></pre>
+                <h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a><strong>Dynamic Programming</strong></h2><h3 id="打家劫舍问题P"><a href="#打家劫舍问题P" class="headerlink" title="打家劫舍问题P"></a>打家劫舍问题P</h3><p>偷了 <strong>i</strong> 家，则 <strong>i-1</strong> 家和 <strong>i+1</strong> 家都不能偷</p>
+<p>nums列表存储的是第 <strong>i</strong> 家中的金币数量</p>
+<p>dp列表存储的是前 <strong>i</strong> 家时小偷能够获得的最大金币数</p>
+<pre class="language-python" data-language="python"><code class="language-python">dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> size
+dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+dp<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+
+<h3 id="最大正方形"><a href="#最大正方形" class="headerlink" title="最大正方形"></a>最大正方形</h3><p>matrix存储元素为0或1字符的一个m x n矩阵，要求其中1元素能组成的最大正方形的边长</p>
+<p>dp列表存储的第<strong>i</strong>行第<strong>j</strong>列可能构成的最大正方形边长</p>
+<p>如果(i,j)处元素为1，则此处能构成的最大正方形边长为(i-1,j) (i,j-1) (i-1,j-1)中能构成的最大边长的最小值+1</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		<span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">or</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+			dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token keyword">elif</span> i <span class="token operator">!=</span> <span class="token number">0</span> <span class="token keyword">and</span> j <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+			<span class="token keyword">if</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'1'</span><span class="token punctuation">:</span>
+				dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+			<span class="token keyword">else</span><span class="token punctuation">:</span>
+				dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+		<span class="token keyword">if</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token builtin">max</span><span class="token punctuation">:</span>
+			<span class="token builtin">max</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span></code></pre>
 
 
 
-<h3 id="启用Batch-Normalization-和-Dropout"><a href="#启用Batch-Normalization-和-Dropout" class="headerlink" title="启用Batch Normalization 和 Dropout"></a>启用Batch Normalization 和 Dropout</h3><p>需要在训练时添加model.train()。model.train()是保证BN层能够用到每一批数据的均值和方差。对于Dropout，model.train()是随机取一部分网络连接来训练更新参数。</p>
-<h3 id="不启用-Batch-Normalization-和-Dropout"><a href="#不启用-Batch-Normalization-和-Dropout" class="headerlink" title="不启用 Batch Normalization 和 Dropout"></a>不启用 Batch Normalization 和 Dropout</h3><p>如果模型中有BN层(Batch Normalization）和Dropout，在测试时添加model.eval()。model.eval()是保证BN层能够用全部训练数据的均值和方差，即测试过程中要保证BN层的均值和方差不变。对于Dropout, model.eval()是利用到了所有网络连接，即不进行随机舍弃神经元。</p>
-<p>训练完train样本后，生成的模型model要用来测试样本。在model(test)之前，需要加上model.eval()，否则的话，有输入数据，即使不训练，它也会改变权值。这是model中含有BN层和Dropout所带来的的性质。</p>
+<h3 id="最长公共子序列-LCS"><a href="#最长公共子序列-LCS" class="headerlink" title="最长公共子序列(LCS)"></a>最长公共子序列(LCS)</h3><p>设X&#x3D;x1x2…xm和Y&#x3D;y1y2…yn是两个序列，Z&#x3D;z1z2…zk是这两个序列的一个最长公共子序列。</p>
+<ol>
+<li><p>如果xm&#x3D;yn，那么zk&#x3D;xm&#x3D;yn，且Zk-1是Xm-1，Yn-1的一个最长公共子序列；</p>
+</li>
+<li><p>如果xm≠yn，那么zk≠xm，意味着Z是Xm-1，Y的一个最长公共子序列；</p>
+</li>
+<li><p>如果xm≠yn，那么zk≠yn，意味着Z是X，Yn-1的一个最长公共子序列。</p>
+</li>
+</ol>
+<p>我们使用dp[i][j]来表示第一个串的前i位和第二个串的前j位中的最长公共子序列，我们很容易能发现当两个串的任意一个串的当前长度为0时，它的最长公共子序列的长度为0，所以先对dp数组的边界进行初始化。然后我们发现，如果a[i]&#x3D;b[j]，dp[i][j]&#x3D;dp[i-1][j-1]+1，很显然，当比对的位字符一样时，能得到该状态转移方程。如果a[i]≠b[j]，dp[i][j]&#x3D;max(dp[i-1][j],dp[i][j-1])，该状态转移方程是由上面的2，3条取最大值得到的。</p>
+<pre class="language-python" data-language="python"><code class="language-python">l1 <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>text1<span class="token punctuation">)</span>
+l2 <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>text2<span class="token punctuation">)</span>
+dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token punctuation">(</span>l2<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>l1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> l1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> l2 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">if</span> text1<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">!=</span> text2<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+		dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		p<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span>
+<span class="token keyword">return</span> dp<span class="token punctuation">[</span>l1<span class="token punctuation">]</span><span class="token punctuation">[</span>l2<span class="token punctuation">]</span> </code></pre>
+
+<h3 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a>最长公共子串</h3><p>我们使用dp[i][j]来表示第一个串的前i位和第二个串的前j位中的最长公共子串，我们很容易能发现当两个串的任意一个串的当前长度为0时，它的最长公共子序列的长度为0，所以先对dp数组的边界进行初始化。然后我们发现，如果a[i]&#x3D;b[j]，dp[i][j]&#x3D;dp[i-1][j-1]+1，很显然，当比对的位字符一样时，能得到该状态转移方程。如果a[i]≠b[j]，dp[i][j]&#x3D;0，说明无论之前有没有连续的子串，到了这个不相等的位置会直接断掉，所以dp[i][j]&#x3D;0;</p>
+<pre class="language-python" data-language="python"><code class="language-python">dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token builtin">max</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+		<span class="token keyword">if</span> s1<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> s2<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+			dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span>
+		<span class="token keyword">else</span><span class="token punctuation">:</span>
+			dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+		<span class="token keyword">if</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">></span><span class="token builtin">max</span><span class="token punctuation">:</span>
+			<span class="token builtin">max</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">max</span><span class="token punctuation">)</span></code></pre>
+
+
+
+<h3 id="有效括号组合"><a href="#有效括号组合" class="headerlink" title="有效括号组合"></a>有效括号组合</h3><p>数字 n 代表生成括号的对数，设计一个函数，用于能够生成所有可能的并且<strong>有效的</strong>括号组合。</p>
+<p><strong>固定第n个括号的左括号在最左，则n-1个括号可以在n括号内或外</strong>，通过动态规划可以直到小于n时的任意个括号的有效组合</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+total <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+total<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token boolean">None</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+total<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'()'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	s <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		now_list1 <span class="token operator">=</span> total<span class="token punctuation">[</span>j<span class="token punctuation">]</span>        <span class="token comment"># p = j 时的括号组合情况</span>
+		now_list2 <span class="token operator">=</span> total<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>j<span class="token punctuation">]</span>    <span class="token comment"># q = (i-1) - j 时的括号组合情况,因为已经固定了一个</span>
+			<span class="token keyword">for</span> k1 <span class="token keyword">in</span> now_list1<span class="token punctuation">:</span>
+				<span class="token keyword">for</span> k2 <span class="token keyword">in</span> now_list2<span class="token punctuation">:</span>
+					<span class="token keyword">if</span> k1 <span class="token operator">==</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+						k1 <span class="token operator">=</span> <span class="token string">''</span>
+					<span class="token keyword">if</span> k2 <span class="token operator">==</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+						k2 <span class="token operator">=</span> <span class="token string">''</span>
+					en <span class="token operator">=</span> <span class="token string">'('</span> <span class="token operator">+</span> k1 <span class="token operator">+</span> <span class="token string">')'</span> <span class="token operator">+</span> k2
+					s<span class="token punctuation">.</span>append<span class="token punctuation">(</span>en<span class="token punctuation">)</span>
+	total<span class="token punctuation">.</span>append<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+<span class="token keyword">return</span> total<span class="token punctuation">[</span>n<span class="token punctuation">]</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
 
                 
             </div>
@@ -341,7 +413,7 @@ model <span class="token operator">=</span> NeuralNet<span class="token punctuat
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/05/29/dropout/">https://dipperbill.github.io/2022/05/29/dropout/</a>
+                    <a href="https://dipperbill.github.io/2022/05/31/lc-dynamic-programming/">https://dipperbill.github.io/2022/05/31/lc-dynamic-programming/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -379,8 +451,12 @@ model <span class="token operator">=</span> NeuralNet<span class="token punctuat
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Dropout/">
-                                    <span class="chip bg-color">Dropout</span>
+                                <a href="/tags/Python/">
+                                    <span class="chip bg-color">Python</span>
+                                </a>
+                            
+                                <a href="/tags/Dynamic-Programming/">
+                                    <span class="chip bg-color">Dynamic Programming</span>
                                 </a>
                             
                         </div>
@@ -428,50 +504,52 @@ model <span class="token operator">=</span> NeuralNet<span class="token punctuat
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2022/05/30/dnn-gradient-vanishing-or-exploding/">
+                <a href="/2022/05/31/lc-dynamic-programming/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="DNN Gradient Vanishing or Exploding">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="LC Dynamic Programming">
                         
-                        <span class="card-title">DNN Gradient Vanishing or Exploding</span>
+                        <span class="card-title">LC Dynamic Programming</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            What is Gradient Vanishing? Exploding?
+                            Dynamic Programming problem in LC
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
+                            <a href="/categories/Leetcode/" class="post-category">
+                                    Leetcode
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/DNN/">
-                        <span class="chip bg-color">DNN</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
-                    <a href="/tags/Gradient/">
-                        <span class="chip bg-color">Gradient</span>
+                    <a href="/tags/Dynamic-Programming/">
+                        <span class="chip bg-color">Dynamic Programming</span>
                     </a>
                     
                 </div>
@@ -485,31 +563,31 @@ model <span class="token operator">=</span> NeuralNet<span class="token punctuat
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/05/28/cnn/">
+                <a href="/2022/05/31/lc-slicing-of-list/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="CNN">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="LC Slicing of List">
                         
-                        <span class="card-title">CNN</span>
+                        <span class="card-title">LC Slicing of List</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Notes of Convolutional Neural Network
+                            Basic grammar of Python about Slicing
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-31
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
+                            <a href="/categories/Leetcode/" class="post-category">
+                                    Leetcode
                                 </a>
                             
                             
@@ -519,16 +597,8 @@ model <span class="token operator">=</span> NeuralNet<span class="token punctuat
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CNN/">
-                        <span class="chip bg-color">CNN</span>
-                    </a>
-                    
-                    <a href="/tags/Pooling-and-Unpooling/">
-                        <span class="chip bg-color">Pooling and Unpooling</span>
-                    </a>
-                    
-                    <a href="/tags/Receptive-Field/">
-                        <span class="chip bg-color">Receptive Field</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
                 </div>
