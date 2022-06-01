@@ -407,11 +407,12 @@
 <span class="token comment">#         [-0.6188, 0.5902, -0.0860]], requires_grad=True)</span>
 
 <span class="token operator">>></span><span class="token operator">></span> embedding<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>size
-
 <span class="token comment"># torch.Size([10, 3])</span>
+</code></pre>
 
- 
-<span class="token comment"># note that input is indices, the size of which is [2,4]</span>
+
+
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># note that input is indices, the size of which is [2,4]</span>
 <span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>LongTensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 
 a <span class="token operator">=</span> embedding<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span>   
@@ -427,6 +428,8 @@ a <span class="token operator">=</span> embedding<span class="token punctuation"
 
 <span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token comment"># torch.Size([2, 4, 3])</span></code></pre>
+
+
 
 <p>a &#x3D; embedding(input)是去embedding.weight中取对应index的词向量！</p>
 <p>看a的第一行，input处index&#x3D;1，对应取出weight中index&#x3D;1的值，即按index取词向量！</p>
