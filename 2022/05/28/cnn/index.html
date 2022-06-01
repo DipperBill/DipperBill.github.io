@@ -363,7 +363,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-05-30
+                    2022-06-01
                 </div>
                 
 
@@ -394,9 +394,9 @@
  <pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">torch</span><span class="token punctuation">.</span>nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token punctuation">,</span> 
                       stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> dilation<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> groups<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
 <span class="token comment"># 前三个参数必填</span>
-mod <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">2</span> <span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span></code></pre>
+mod <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span> <span class="token number">2</span> <span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">)</span></code></pre>
 
-<p>inputs: 2 channels ——every channel is a feature map, 灰度图片只有一个feature map；彩色图片一般3个feature map（RGB）</p>
+<p>inputs: 2 channels — every channel is a feature map, 灰度图片只有一个feature map；彩色图片一般3个feature map（RGB）</p>
 <p>output: 5 activation maps —— 5个激活映射，每个filter都会产生一个，所以有5个filters</p>
 <p>filters are 3x3, padding with one layer of zero to not shrink anything</p>
 <h2 id="Receptive-Field"><a href="#Receptive-Field" class="headerlink" title="Receptive Field"></a><strong>Receptive Field</strong></h2><p>感受野（Receptive Field）的定义是卷积神经网络每一层输出的特征图（feature map）上的像素点在输入图片上映射的区域大小。再通俗点的解释是，特征图上的一个点对应输入图上的区域，如图。</p>
