@@ -166,6 +166,35 @@
     
     
     <entry>
+      <title>One hot Encoding and Sparse Vector</title>
+      <link href="/2022/05/28/one-hot-encoding-and-sparse-vector/"/>
+      <url>/2022/05/28/one-hot-encoding-and-sparse-vector/</url>
+      
+        <content type="html"><![CDATA[<h2 id="one-hot-vectorial-representations"><a href="#one-hot-vectorial-representations" class="headerlink" title="one-hot vectorial representations"></a><strong>one-hot vectorial representations</strong></h2><p>独热编码，即 One-Hot 编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都有它独立的寄存器位，并且在任意时候，其中只有一位有效。</p><p>例如对六个状态进行编码：</p><p>自然顺序码为 000,001,010,011,100,101</p><p>独热编码则是 000001,000010,000100,001000,010000,100000</p><h2 id="Sparse-Vector-versus-Dense-Vector"><a href="#Sparse-Vector-versus-Dense-Vector" class="headerlink" title="Sparse Vector versus Dense Vector"></a><strong>Sparse Vector versus Dense Vector</strong></h2><p>Vector(1.0,0.0,1.0,3.0) </p><p>Dense Vector[1.0,0.0,1.0,3.0]</p><p>Sparse Vector(4,[0,2,3],[1.0,1.0,3.0])</p><p>第一个4表示向量的长度(元素个数)，[0,2,3]就是indices数组；[1.0,1.0,3.0]是values数组，表示向量0的位置的值是1.0，2的位置的值是1.0,而3的位置的值是3.0,其他的位置都是0。</p><p>稀疏向量在面对很多数据是零的情况下能节省很多的存储空间</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Pytorch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> one-hot vectorial </tag>
+            
+            <tag> Sparse Vector </tag>
+            
+            <tag> Dense Vector </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Vanilla Neural Networks</title>
       <link href="/2022/05/28/vanilla-neural-networks/"/>
       <url>/2022/05/28/vanilla-neural-networks/</url>
@@ -211,7 +240,7 @@
       
         <tags>
             
-            <tag> Tensors </tag>
+            <tag> Tensor </tag>
             
         </tags>
       
