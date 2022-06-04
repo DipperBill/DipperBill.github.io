@@ -4,6 +4,58 @@
   
     
     <entry>
+      <title>Git Operation</title>
+      <link href="/2022/06/04/git-operation/"/>
+      <url>/2022/06/04/git-operation/</url>
+      
+        <content type="html"><![CDATA[<h2 id="How-to-build-a-repository-and-upload-files"><a href="#How-to-build-a-repository-and-upload-files" class="headerlink" title="How to build a repository and upload files?"></a>How to build a repository and upload files?</h2><h3 id="1-Build-a-new-repository"><a href="#1-Build-a-new-repository" class="headerlink" title="1.Build a new repository"></a>1.Build a new repository</h3><h3 id="2-Right-click-and-choose-‘git-bash-here’-in-Local-Project-Folder-clone-remote-repository"><a href="#2-Right-click-and-choose-‘git-bash-here’-in-Local-Project-Folder-clone-remote-repository" class="headerlink" title="2. Right-click and choose ‘git bash here’ in Local Project Folder, clone remote repository"></a>2. Right-click and choose ‘git bash here’ in Local Project Folder, clone remote repository</h3><pre class="language-c" data-language="c"><code class="language-c">git clone https<span class="token operator">:</span><span class="token comment">//github.com/XXXXX/Your Project.git</span></code></pre><h3 id="3-Local-Folder-Initialization"><a href="#3-Local-Folder-Initialization" class="headerlink" title="3.Local Folder Initialization"></a>3.Local Folder Initialization</h3><pre class="language-c" data-language="c"><code class="language-c">cd Your Projectgit init </code></pre><h3 id="5-Add-files-to-Local-Folder"><a href="#5-Add-files-to-Local-Folder" class="headerlink" title="5.Add files to Local Folder"></a>5.Add files to Local Folder</h3><pre class="language-c" data-language="c"><code class="language-c">git add <span class="token punctuation">.</span></code></pre><h3 id="6-Commit-code-with-annotation"><a href="#6-Commit-code-with-annotation" class="headerlink" title="6.Commit code with annotation"></a>6.Commit code with annotation</h3><p>Annotations, like ‘initial commit’ are indispensable.</p><pre class="language-c" data-language="c"><code class="language-c">git commit <span class="token operator">-</span>m <span class="token char">'initial commit'</span></code></pre><h3 id="7-push-code-to-remote-repository"><a href="#7-push-code-to-remote-repository" class="headerlink" title="7.push code to remote repository"></a>7.push code to remote repository</h3><pre class="language-c" data-language="c"><code class="language-c">git push</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Git operation </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>One hot Encoding and Sparse Vector</title>
+      <link href="/2022/06/03/one-hot-encoding-and-sparse-vector/"/>
+      <url>/2022/06/03/one-hot-encoding-and-sparse-vector/</url>
+      
+        <content type="html"><![CDATA[<h2 id="one-hot-vectorial-representations"><a href="#one-hot-vectorial-representations" class="headerlink" title="one-hot vectorial representations"></a><strong>one-hot vectorial representations</strong></h2><p>独热编码，即 One-Hot 编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都有它独立的寄存器位，并且在任意时候，其中只有一位有效。</p><p>例如对六个状态进行编码：</p><p>自然顺序码为 000,001,010,011,100,101</p><p>独热编码则是 000001,000010,000100,001000,010000,100000</p><h2 id="Sparse-Vector-versus-Dense-Vector"><a href="#Sparse-Vector-versus-Dense-Vector" class="headerlink" title="Sparse Vector versus Dense Vector"></a><strong>Sparse Vector versus Dense Vector</strong></h2><p>Vector(1.0,0.0,1.0,3.0) </p><p>Dense Vector[1.0,0.0,1.0,3.0]</p><p>Sparse Vector(4,[0,2,3],[1.0,1.0,3.0])</p><p>第一个4表示向量的长度(元素个数)，[0,2,3]就是indices数组；[1.0,1.0,3.0]是values数组，表示向量0的位置的值是1.0，2的位置的值是1.0,而3的位置的值是3.0,其他的位置都是0。</p><p>稀疏向量在面对很多数据是零的情况下能节省很多的存储空间</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Pytorch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> one-hot vectorial </tag>
+            
+            <tag> Sparse Vector </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>RNN and LSTM</title>
       <link href="/2022/06/01/rnn-and-lstm/"/>
       <url>/2022/06/01/rnn-and-lstm/</url>
@@ -158,33 +210,6 @@
             <tag> Pooling and Unpooling </tag>
             
             <tag> Receptive Field </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>One hot Encoding and Sparse Vector</title>
-      <link href="/2022/05/28/one-hot-encoding-and-sparse-vector/"/>
-      <url>/2022/05/28/one-hot-encoding-and-sparse-vector/</url>
-      
-        <content type="html"><![CDATA[<h2 id="one-hot-vectorial-representations"><a href="#one-hot-vectorial-representations" class="headerlink" title="one-hot vectorial representations"></a><strong>one-hot vectorial representations</strong></h2><p>独热编码，即 One-Hot 编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都有它独立的寄存器位，并且在任意时候，其中只有一位有效。</p><p>例如对六个状态进行编码：</p><p>自然顺序码为 000,001,010,011,100,101</p><p>独热编码则是 000001,000010,000100,001000,010000,100000</p><h2 id="Sparse-Vector-versus-Dense-Vector"><a href="#Sparse-Vector-versus-Dense-Vector" class="headerlink" title="Sparse Vector versus Dense Vector"></a><strong>Sparse Vector versus Dense Vector</strong></h2><p>Vector(1.0,0.0,1.0,3.0) </p><p>Dense Vector[1.0,0.0,1.0,3.0]</p><p>Sparse Vector(4,[0,2,3],[1.0,1.0,3.0])</p><p>第一个4表示向量的长度(元素个数)，[0,2,3]就是indices数组；[1.0,1.0,3.0]是values数组，表示向量0的位置的值是1.0，2的位置的值是1.0,而3的位置的值是3.0,其他的位置都是0。</p><p>稀疏向量在面对很多数据是零的情况下能节省很多的存储空间</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Pytorch </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> one-hot vectorial </tag>
-            
-            <tag> Sparse Vector </tag>
             
         </tags>
       

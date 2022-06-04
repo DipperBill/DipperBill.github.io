@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RNN and LSTM, Cipher&#39;s Blog">
-    <meta name="description" content="Notes of Recurrent Neural Network and LSTM">
+    <meta name="keywords" content="One hot Encoding and Sparse Vector, Cipher&#39;s Blog">
+    <meta name="description" content="Notes of Vectorial in Machine Learning">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>RNN and LSTM | Cipher&#39;s Blog</title>
+    <title>One hot Encoding and Sparse Vector | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -202,12 +202,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">RNN and LSTM</h1>
+                    <h1 class="description center-align post-title">One hot Encoding and Sparse Vector</h1>
                 </div>
             </div>
         </div>
@@ -323,16 +323,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RNN/">
-                                <span class="chip bg-color">RNN</span>
+                            <a href="/tags/one-hot-vectorial/">
+                                <span class="chip bg-color">one-hot vectorial</span>
                             </a>
                         
-                            <a href="/tags/Embedding/">
-                                <span class="chip bg-color">Embedding</span>
-                            </a>
-                        
-                            <a href="/tags/LSTM/">
-                                <span class="chip bg-color">LSTM</span>
+                            <a href="/tags/Sparse-Vector/">
+                                <span class="chip bg-color">Sparse Vector</span>
                             </a>
                         
                     </div>
@@ -356,14 +352,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-06-01
+                    2022-06-03
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-06-01
+                    2022-06-04
                 </div>
                 
 
@@ -390,182 +386,15 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="RNN-and-LSTM"><a href="#RNN-and-LSTM" class="headerlink" title="RNN and LSTM"></a>RNN and LSTM</h2><h3 id="nn-embedding"><a href="#nn-embedding" class="headerlink" title="nn.embedding"></a><strong>nn.embedding</strong></h3><p>nn.embedding 构造一个vocab size的lookup table，每个vocabulary用hidden_size维度的向量表示</p>
- <pre class="language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> embedding <span class="token operator">=</span> nn<span class="token punctuation">.</span>Embedding<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
-<span class="token operator">>></span><span class="token operator">></span> embedding<span class="token punctuation">.</span>weight
-
-<span class="token comment"># Parameter containing:          </span>
-<span class="token comment"># tensor([[ 1.2402, -1.0914, -0.5382],</span>
-<span class="token comment">#         [-1.1031, -1.2430, -0.2571],</span>
-<span class="token comment">#         [ 1.6682, -0.8926, 1.4263],</span>
-<span class="token comment">#         [ 0.8971, 1.4592, 0.6712],</span>
-<span class="token comment">#         [-1.1625, -0.1598, 0.4034],</span>
-<span class="token comment">#         [-0.2902, -0.0323, -2.2259],</span>
-<span class="token comment">#         [ 0.8332, -0.2452, -1.1508],</span>
-<span class="token comment">#         [ 0.3786, 1.7752, -0.0591],</span>
-<span class="token comment">#         [-1.8527, -2.5141, -0.4990],</span>
-<span class="token comment">#         [-0.6188, 0.5902, -0.0860]], requires_grad=True)</span>
-
-<span class="token operator">>></span><span class="token operator">></span> embedding<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>size
-<span class="token comment"># torch.Size([10, 3])</span>
-</code></pre>
-
-
-
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># note that input is indices, the size of which is [2,4]</span>
-<span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>LongTensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-a <span class="token operator">=</span> embedding<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span>   
-<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token comment"># tensor([[[-1.1031, -1.2430, -0.2571],   </span>
-<span class="token comment">#          [ 1.6682, -0.8926, 1.4263],  </span>
-<span class="token comment">#          [-1.1625, -0.1598, 0.4034],</span>
-<span class="token comment">#          [-0.2902, -0.0323, -2.2259]],</span>
-<span class="token comment">#         [[-1.1625, -0.1598, 0.4034],</span>
-<span class="token comment">#          [ 0.8971, 1.4592, 0.6712],</span>
-<span class="token comment">#          [ 1.6682, -0.8926, 1.4263],</span>
-<span class="token comment">#          [-0.6188, 0.5902, -0.0860]]], grad_fn=&lt;EmbeddingBackward>)</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment"># torch.Size([2, 4, 3])</span></code></pre>
-
-
-
-<p>a &#x3D; embedding(input)是去embedding.weight中取对应index的词向量！</p>
-<p>看a的第一行，input处index&#x3D;1，对应取出weight中index&#x3D;1的值，即按index取词向量！</p>
-<h3 id="Vanilla-RNN"><a href="#Vanilla-RNN" class="headerlink" title="Vanilla RNN"></a><strong>Vanilla RNN</strong></h3><p><img src="/2022/06/01/rnn-and-lstm/rnn.jpg" alt="RNN"></p>
-<pre class="language-python" data-language="python"><code class="language-python">bs <span class="token operator">=</span> <span class="token number">20</span>
-vocab_size <span class="token operator">=</span><span class="token number">10000</span>
-
-<span class="token keyword">class</span> <span class="token class-name">three_layer_recurrent_net</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-	<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> hidden_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token builtin">super</span><span class="token punctuation">(</span>three_layer_recurrent_net<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-			self<span class="token punctuation">.</span>layer1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Embedding<span class="token punctuation">(</span> vocab_size  <span class="token punctuation">,</span> hidden_size <span class="token punctuation">)</span>
-			self<span class="token punctuation">.</span>layer2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>RNN<span class="token punctuation">(</span>       hidden_size <span class="token punctuation">,</span> hidden_size <span class="token punctuation">)</span>
-			self<span class="token punctuation">.</span>layer3 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>    hidden_size <span class="token punctuation">,</span> vocab_size  <span class="token punctuation">)</span>
-		
-        <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> word_seq<span class="token punctuation">,</span> h_init <span class="token punctuation">)</span><span class="token punctuation">:</span>
-			g_seq <span class="token operator">=</span> self<span class="token punctuation">.</span>layer1<span class="token punctuation">(</span> word_seq <span class="token punctuation">)</span> 
-			h_seq <span class="token punctuation">,</span> h_final  <span class="token operator">=</span>  self<span class="token punctuation">.</span>layer2<span class="token punctuation">(</span> g_seq <span class="token punctuation">,</span> h_init <span class="token punctuation">)</span>
-			score_seq <span class="token operator">=</span> self<span class="token punctuation">.</span>layer3<span class="token punctuation">(</span> h_seq <span class="token punctuation">)</span>
-			<span class="token keyword">return</span> score_seq<span class="token punctuation">,</span> h_final</code></pre>
-
-
-
-<p>nn.RNN(<strong>input_size, hidden_size</strong>, num_layers&#x3D;1, nonlinearity&#x3D;tanh, bias&#x3D;True, batch_first&#x3D;False, dropout&#x3D;0, bidirectional&#x3D;False)</p>
-<p>input_size输入特征的维度， 一般rnn中输入的是词向量，那么 input_size 就等于一个词向量的维度（nn.Embedding()里定义了词向量维度）,或词向量的feature。</p>
-<p>hidden_size隐藏层神经元个数，或者也叫输出的维度（因为rnn输出为各个时间步上的隐藏状态），<strong>可以不等于</strong>input_size，网络中会自动进行升降维度。</p>
-<p>num_layers: Number of <strong>recurrent layers</strong>. Setting num_layers&#x3D;2 would mean stacking two RNNs together to form a stacked RNN, with the second RNN taking in outputs of the first RNN and computing the final results. Default: 1</p>
-<p>nonlinearity激活函数，只能用relu或tanh（默认）</p>
-<p>bias是否使用偏置</p>
-<p>batch_first输入数据的形式</p>
-<p>dropout是否在每个<strong>recurrent layer</strong>(RNN layer)后应用dropout（除最后一层）,默认不使用，如若使用将其设置成一个0-1的数字即可</p>
-<p>birdirectional是否使用双向的 rnn，默认是 False，双向RNN对输入输出维度会有影响</p>
-<p># 输入</p>
-<p>input_shape为[seq_length, batch_size, hidden_size]</p>
-<p>在例子里，g_seq是size为[word_seq, hidden_size]的张量，或者可以写成[seq_length, batch_size, hidden_size]</p>
-<p>h_init的shape为[num_layers, batch_size, hidden_size]</p>
-<p># 输出</p>
-<p>在前向计算后会分别返回<strong>输出output和隐藏状态h_n</strong>。其中输出指的是隐藏层在各个时间步上计算并输出的隐藏状态，它们通常作为后续输出层的输⼊。需要强调的是，该“输出”本身并不涉及输出层计算，size为[seq_length, batch_size, hidden_size]；隐藏状态指的是隐藏层在最后时间步的隐藏状态：当隐藏层有多层时，每⼀层的隐藏状态都会记录在该变量中，隐藏状态h的size为[num_layers, batch_size, hidden_size]</p>
-<p><img src="/2022/06/01/rnn-and-lstm/rnn_h_t.jpg"></p>
-<pre class="language-python" data-language="python"><code class="language-python">input_size <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">(</span>word vector dimension <span class="token keyword">or</span> <span class="token builtin">input</span> feature<span class="token punctuation">)</span><span class="token punctuation">,</span> hidden_size <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">,</span> num_layers <span class="token operator">=</span> <span class="token number">2</span>
-rnn <span class="token operator">=</span> nn<span class="token punctuation">.</span>RNN<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span>
-
-<span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">21</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
-
-<span class="token comment"># seq_length = 21, (21 words, 21 time_steps), batch_size = 8, (8 sentences), every single word vector’s size = 5</span>
-<span class="token comment"># 假设一个batch里面有8个句子，现在走到第17个time step，同时计算的是这个batch里面，8个不同sequence中第17个词，得到这8个词的状态之后，传到下一个timestep对应的cell，再计算8个不同sequence中第18个词 </span>
-<span class="token comment"># num_layer = 7, batch_size = 8, hidden_size = 6</span>
-
-h0 <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span>
-output<span class="token punctuation">,</span> hn <span class="token operator">=</span> rnn<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">,</span> h0<span class="token punctuation">)</span>
-
-<span class="token comment"># output.size() = torch.Size([21, 8, 6])</span>
-<span class="token comment"># hn.size() = torch.Size([7, 8, 6])</span></code></pre>
-
-
-
-<h3 id="RNN-training-in-10-epoch"><a href="#RNN-training-in-10-epoch" class="headerlink" title="RNN training in 10 epoch"></a><strong>RNN training in 10 epoch</strong></h3><pre class="language-python" data-language="python"><code class="language-python">hidden_size<span class="token operator">=</span><span class="token number">150</span>
-net <span class="token operator">=</span> three_layer_recurrent_net<span class="token punctuation">(</span> hidden_size <span class="token punctuation">)</span>
-criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>CrossEntropyLoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
-my_lr <span class="token operator">=</span> <span class="token number">1</span>
-seq_length <span class="token operator">=</span> <span class="token number">35</span>
-start<span class="token operator">=</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> epoch <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-	<span class="token comment"># keep the learning rate to 1 during the first 4 epochs, then divide by 1.1 at every epoch</span>
-	<span class="token keyword">if</span> epoch <span class="token operator">>=</span> <span class="token number">4</span><span class="token punctuation">:</span>
-		my_lr <span class="token operator">=</span> my_lr <span class="token operator">/</span> <span class="token number">1.1</span>
-	<span class="token comment"># create a new optimizer and give the current learning rate.  </span>
-	optimizer<span class="token operator">=</span>torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>SGD<span class="token punctuation">(</span> net<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">,</span> lr<span class="token operator">=</span>my_lr <span class="token punctuation">)</span>
-	<span class="token comment"># set the running quantities to zero at the beginning of the epoch</span>
-    running_loss<span class="token operator">=</span><span class="token number">0</span>
-    num_batches<span class="token operator">=</span><span class="token number">0</span>  
-    <span class="token comment"># set the initial h to be the zero vector</span>
-    h <span class="token operator">=</span> torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> bs<span class="token punctuation">,</span> hidden_size<span class="token punctuation">)</span>
-    <span class="token comment"># send it to the gpu  </span>
-    h<span class="token operator">=</span>h<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
-    
-	<span class="token keyword">for</span> count <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span> <span class="token number">0</span> <span class="token punctuation">,</span> <span class="token number">46478</span><span class="token operator">-</span>seq_length <span class="token punctuation">,</span>  seq_length<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment"># Set the gradients to zeros</span>
-        optimizer<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment"># create a minibatch, every unit output should be compared with the next step, </span>
-        <span class="token comment"># so minibatch_label should be [ count+1 : count+seq_length+1 ]</span>
-        minibatch_data <span class="token operator">=</span> train_data<span class="token punctuation">[</span>  count  <span class="token punctuation">:</span>  count<span class="token operator">+</span>seq_length  <span class="token punctuation">]</span>
-        minibatch_label <span class="token operator">=</span> train_data<span class="token punctuation">[</span> count<span class="token operator">+</span><span class="token number">1</span> <span class="token punctuation">:</span> count<span class="token operator">+</span>seq_length<span class="token operator">+</span><span class="token number">1</span> <span class="token punctuation">]</span>    
-        <span class="token comment"># send them to the gpu</span>
-        minibatch_data<span class="token operator">=</span>minibatch_data<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
-        minibatch_label<span class="token operator">=</span>minibatch_label<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
-        <span class="token comment"># Detach to prevent from backpropagating all the way to the beginning</span>
-        <span class="token comment"># Then tell Pytorch to start tracking all operations that will be done on h</span>
-        h<span class="token operator">=</span>h<span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        h<span class="token operator">=</span>h<span class="token punctuation">.</span>requires_grad_<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment"># forward the minibatch through the net    </span>
-        scores<span class="token punctuation">,</span> h <span class="token operator">=</span> net<span class="token punctuation">(</span> minibatch_data<span class="token punctuation">,</span> h <span class="token punctuation">)</span>
-        <span class="token comment"># reshape the scores and labels to huge batch of size bs*seq_length</span>
-        scores <span class="token operator">=</span> scores<span class="token punctuation">.</span>view<span class="token punctuation">(</span> bs<span class="token operator">*</span>seq_length <span class="token punctuation">,</span> vocab_size<span class="token punctuation">)</span> 
-        minibatch_label <span class="token operator">=</span>  minibatch_label<span class="token punctuation">.</span>view<span class="token punctuation">(</span> bs<span class="token operator">*</span>seq_length <span class="token punctuation">)</span>    
-        <span class="token comment"># Compute the average of the losses of the data points in this huge batch</span>
-        loss <span class="token operator">=</span> criterion<span class="token punctuation">(</span> scores <span class="token punctuation">,</span> minibatch_label <span class="token punctuation">)</span>
-        <span class="token comment"># backward pass to compute dL/dR, dL/dV and dL/dW</span>
-        loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment"># do one step of stochastic gradient descent: R=R-lr(dL/dR), V=V-lr(dL/dV), ...</span>
-        utils<span class="token punctuation">.</span>normalize_gradient<span class="token punctuation">(</span>net<span class="token punctuation">)</span>
-        optimizer<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment"># update the running loss </span>
-        running_loss <span class="token operator">+=</span> loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        num_batches <span class="token operator">+=</span> <span class="token number">1</span>
- 
-	<span class="token comment"># compute stats for the full training set</span>
-	total_loss <span class="token operator">=</span> running_loss<span class="token operator">/</span>num_batches
-	elapsed <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span>start
-	<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
-	<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'epoch='</span><span class="token punctuation">,</span>epoch<span class="token punctuation">,</span> <span class="token string">'\t time='</span><span class="token punctuation">,</span> elapsed<span class="token punctuation">,</span><span class="token string">'\t lr='</span><span class="token punctuation">,</span> my_lr<span class="token punctuation">,</span> <span class="token string">'\t exp(loss)='</span><span class="token punctuation">,</span> math<span class="token punctuation">.</span>exp<span class="token punctuation">(</span>total_loss<span class="token punctuation">)</span><span class="token punctuation">)</span>
-	eval_on_test_set<span class="token punctuation">(</span><span class="token punctuation">)</span> </code></pre>
-
-
-
-<h3 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a><strong>LSTM</strong></h3><p>help alleviate the problem of vanishing and exploding gradients in RNN</p>
-<p>长短期记忆（LSTM），隐藏状态是⼀个元组(h, c)，即hidden state和cell state</p>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">three_layer_recurrent_net</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-	<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> hidden_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
-		<span class="token builtin">super</span><span class="token punctuation">(</span>three_layer_recurrent_net<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-			self<span class="token punctuation">.</span>layer1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Embedding<span class="token punctuation">(</span> vocab_size <span class="token punctuation">,</span> hidden_size <span class="token punctuation">)</span>
-			self<span class="token punctuation">.</span>layer2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>LSTM<span class="token punctuation">(</span>   hidden_size <span class="token punctuation">,</span> hidden_size <span class="token punctuation">)</span>
-			self<span class="token punctuation">.</span>layer3 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>  hidden_size <span class="token punctuation">,</span> vocab_size  <span class="token punctuation">)</span>
-		<span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> word_seq<span class="token punctuation">,</span> h_init<span class="token punctuation">,</span> c_init <span class="token punctuation">)</span><span class="token punctuation">:</span>
-			g_seq <span class="token operator">=</span> self<span class="token punctuation">.</span>layer1<span class="token punctuation">(</span>word_seq <span class="token punctuation">)</span> 
-			h_seq<span class="token punctuation">,</span><span class="token punctuation">(</span>h_final<span class="token punctuation">,</span>c_final<span class="token punctuation">)</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>layer2<span class="token punctuation">(</span> g_seq <span class="token punctuation">,</span> <span class="token punctuation">(</span>h_init<span class="token punctuation">,</span>c_init<span class="token punctuation">)</span> <span class="token punctuation">)</span>
-			score_seq <span class="token operator">=</span> self<span class="token punctuation">.</span>layer3<span class="token punctuation">(</span>h_seq<span class="token punctuation">)</span>
-			<span class="token keyword">return</span> score_seq<span class="token punctuation">,</span> h_final <span class="token punctuation">,</span> c_final
-
-lstm <span class="token operator">=</span> nn<span class="token punctuation">.</span>LSTM<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
-h0 <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
-c0 <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
-output<span class="token punctuation">,</span> <span class="token punctuation">(</span>hn<span class="token punctuation">,</span> cn<span class="token punctuation">)</span> <span class="token operator">=</span> lstm<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>h0<span class="token punctuation">,</span> c0<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
-
-
-
+                <h2 id="one-hot-vectorial-representations"><a href="#one-hot-vectorial-representations" class="headerlink" title="one-hot vectorial representations"></a><strong>one-hot vectorial representations</strong></h2><p>独热编码，即 One-Hot 编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都有它独立的寄存器位，并且在任意时候，其中只有一位有效。</p>
+<p>例如对六个状态进行编码：</p>
+<p>自然顺序码为 000,001,010,011,100,101</p>
+<p>独热编码则是 000001,000010,000100,001000,010000,100000</p>
+<h2 id="Sparse-Vector-versus-Dense-Vector"><a href="#Sparse-Vector-versus-Dense-Vector" class="headerlink" title="Sparse Vector versus Dense Vector"></a><strong>Sparse Vector versus Dense Vector</strong></h2><p>Vector(1.0,0.0,1.0,3.0) </p>
+<p>Dense Vector[1.0,0.0,1.0,3.0]</p>
+<p>Sparse Vector(4,[0,2,3],[1.0,1.0,3.0])</p>
+<p>第一个4表示向量的长度(元素个数)，[0,2,3]就是indices数组；[1.0,1.0,3.0]是values数组，表示向量0的位置的值是1.0，2的位置的值是1.0,而3的位置的值是3.0,其他的位置都是0。</p>
+<p>稀疏向量在面对很多数据是零的情况下能节省很多的存储空间</p>
 
                 
             </div>
@@ -592,7 +421,7 @@ output<span class="token punctuation">,</span> <span class="token punctuation">(
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/06/01/rnn-and-lstm/">https://dipperbill.github.io/2022/06/01/rnn-and-lstm/</a>
+                    <a href="https://dipperbill.github.io/2022/06/03/one-hot-encoding-and-sparse-vector/">https://dipperbill.github.io/2022/06/03/one-hot-encoding-and-sparse-vector/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -630,16 +459,12 @@ output<span class="token punctuation">,</span> <span class="token punctuation">(
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RNN/">
-                                    <span class="chip bg-color">RNN</span>
+                                <a href="/tags/one-hot-vectorial/">
+                                    <span class="chip bg-color">one-hot vectorial</span>
                                 </a>
                             
-                                <a href="/tags/Embedding/">
-                                    <span class="chip bg-color">Embedding</span>
-                                </a>
-                            
-                                <a href="/tags/LSTM/">
-                                    <span class="chip bg-color">LSTM</span>
+                                <a href="/tags/Sparse-Vector/">
+                                    <span class="chip bg-color">Sparse Vector</span>
                                 </a>
                             
                         </div>
@@ -691,25 +516,74 @@ output<span class="token punctuation">,</span> <span class="token punctuation">(
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2022/06/03/one-hot-encoding-and-sparse-vector/">
+                <a href="/2022/06/04/git-operation/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="One hot Encoding and Sparse Vector">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Git Operation">
                         
-                        <span class="card-title">One hot Encoding and Sparse Vector</span>
+                        <span class="card-title">Git Operation</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Notes of Vectorial in Machine Learning
+                            Notes of Git operation
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-03
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-04
                         </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Git/" class="post-category">
+                                    Git
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Git-operation/">
+                        <span class="chip bg-color">Git operation</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/06/01/rnn-and-lstm/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="RNN and LSTM">
+                        
+                        <span class="card-title">RNN and LSTM</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Notes of Recurrent Neural Network and LSTM
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -725,65 +599,16 @@ output<span class="token punctuation">,</span> <span class="token punctuation">(
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/one-hot-vectorial/">
-                        <span class="chip bg-color">one-hot vectorial</span>
+                    <a href="/tags/RNN/">
+                        <span class="chip bg-color">RNN</span>
                     </a>
                     
-                    <a href="/tags/Sparse-Vector/">
-                        <span class="chip bg-color">Sparse Vector</span>
+                    <a href="/tags/Embedding/">
+                        <span class="chip bg-color">Embedding</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/05/31/lc-dynamic-programming/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="LC Dynamic Programming">
-                        
-                        <span class="card-title">LC Dynamic Programming</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Dynamic Programming problem in LC
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Leetcode/" class="post-category">
-                                    Leetcode
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/Dynamic-Programming/">
-                        <span class="chip bg-color">Dynamic Programming</span>
+                    <a href="/tags/LSTM/">
+                        <span class="chip bg-color">LSTM</span>
                     </a>
                     
                 </div>
