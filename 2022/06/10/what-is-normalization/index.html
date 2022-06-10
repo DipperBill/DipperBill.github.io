@@ -352,7 +352,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-05-28
+                    2022-06-10
                 </div>
                 
 
@@ -386,10 +386,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="What-is-Normalization"><a href="#What-is-Normalization" class="headerlink" title="What is Normalization?"></a>What is Normalization?</h2><h3 id="LayerNorm"><a href="#LayerNorm" class="headerlink" title="LayerNorm"></a><strong>LayerNorm</strong></h3><p><img src="/2022/05/28/what-is-normalization/layernorm.jpg"></p>
+                <h2 id="What-is-Normalization"><a href="#What-is-Normalization" class="headerlink" title="What is Normalization?"></a>What is Normalization?</h2><h3 id="LayerNorm"><a href="#LayerNorm" class="headerlink" title="LayerNorm"></a><strong>LayerNorm</strong></h3><p><img src="/2022/06/10/what-is-normalization/layernorm.jpg"></p>
 <p>在transformer中一般采用LayerNorm，LayerNorm也是归一化的一种方法，<strong>与BatchNorm不同的是它是对每单个batch进行的归一化，而batchnorm是对所有batch一起进行归一化的</strong>。</p>
-<pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>LayerNorm<span class="token punctuation">(</span>normalized_shape<span class="token punctuation">)</span></code></pre>
-
 <h4 id="normalized-shape-x3D-4"><a href="#normalized-shape-x3D-4" class="headerlink" title="normalized_shape &#x3D; 4"></a>normalized_shape &#x3D; 4</h4><p><strong>如果normalized_shape &#x3D; 4，则被看做一个整数的list</strong>，此时LayerNorm会对输入的最后一维进行归一化，normalized_shape &#x3D; 4需要和输入的最后一维一致。</p>
 <p>比如此时输入的数据维度是[3, 4]，则对3个长度为4的向量求均值方差，得到3个均值和3个方差，分别对这3行进行归一化（每一行的4个数字都是均值为0，方差为1）；LayerNorm中的weight和bias也分别包含4个数字，重复使用3次，对每一行进行仿射变换（仿射变换即上述的运算公式，乘weight中对应的数字后，再加bias中对应的数字），并会在反向传播时得到学习。</p>
 <h4 id="normalized-shape-x3D-3-4-or-torch-Size-3-4"><a href="#normalized-shape-x3D-3-4-or-torch-Size-3-4" class="headerlink" title="normalized_shape &#x3D; [3, 4] or torch.Size([3, 4])"></a>normalized_shape &#x3D; [3, 4] or torch.Size([3, 4])</h4><p>**如果输入的是个list或者torch.Size，比如[3, 4]或torch.Size([3, 4])**，则会对网络最后的两维进行归一化，且要求输入数据的最后两维尺寸也是[3, 4]。</p>
@@ -452,7 +450,7 @@ output <span class="token operator">=</span> m<span class="token punctuation">(<
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/05/28/what-is-normalization/">https://dipperbill.github.io/2022/05/28/what-is-normalization/</a>
+                    <a href="https://dipperbill.github.io/2022/06/10/what-is-normalization/">https://dipperbill.github.io/2022/06/10/what-is-normalization/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -543,85 +541,29 @@ output <span class="token operator">=</span> m<span class="token punctuation">(<
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2022/05/28/cnn/">
+                <a href="/2022/06/10/what-is-normalization/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="CNN">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="What is Normalization">
                         
-                        <span class="card-title">CNN</span>
+                        <span class="card-title">What is Normalization</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Notes of Convolutional Neural Network
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/CNN/">
-                        <span class="chip bg-color">CNN</span>
-                    </a>
-                    
-                    <a href="/tags/Pooling-and-Unpooling/">
-                        <span class="chip bg-color">Pooling and Unpooling</span>
-                    </a>
-                    
-                    <a href="/tags/Receptive-Field/">
-                        <span class="chip bg-color">Receptive Field</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/05/28/vanilla-neural-networks/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Vanilla Neural Networks">
-                        
-                        <span class="card-title">Vanilla Neural Networks</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Build and Train Vanilla NN in mini Batch
+                            Notes of Normaliztion in Pytorch
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-10
                             </span>
                         <span class="publish-author">
                             
@@ -635,19 +577,65 @@ output <span class="token operator">=</span> m<span class="token punctuation">(<
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Vanilla-NN/">
-                        <span class="chip bg-color">Vanilla NN</span>
+                    <a href="/tags/LayerNorm/">
+                        <span class="chip bg-color">LayerNorm</span>
                     </a>
                     
-                    <a href="/tags/Softmax/">
-                        <span class="chip bg-color">Softmax</span>
+                    <a href="/tags/BatchNorm/">
+                        <span class="chip bg-color">BatchNorm</span>
                     </a>
                     
-                    <a href="/tags/Loss/">
-                        <span class="chip bg-color">Loss</span>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/06/04/git-operation/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Git Operation">
+                        
+                        <span class="card-title">Git Operation</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Notes of Git operation
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Git/" class="post-category">
+                                    Git
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Git-operation/">
+                        <span class="chip bg-color">Git operation</span>
                     </a>
                     
                 </div>
