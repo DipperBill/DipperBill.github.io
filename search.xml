@@ -218,6 +218,33 @@
     
     
     <entry>
+      <title>What is Normalization</title>
+      <link href="/2022/05/28/what-is-normalization/"/>
+      <url>/2022/05/28/what-is-normalization/</url>
+      
+        <content type="html"><![CDATA[<h2 id="What-is-Normalization"><a href="#What-is-Normalization" class="headerlink" title="What is Normalization?"></a>What is Normalization?</h2><h3 id="LayerNorm"><a href="#LayerNorm" class="headerlink" title="LayerNorm"></a><strong>LayerNorm</strong></h3><p><img src="/2022/05/28/what-is-normalization/layernorm.jpg"></p><p>在transformer中一般采用LayerNorm，LayerNorm也是归一化的一种方法，<strong>与BatchNorm不同的是它是对每单个batch进行的归一化，而batchnorm是对所有batch一起进行归一化的</strong>。</p><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>LayerNorm<span class="token punctuation">(</span>normalized_shape<span class="token punctuation">)</span></code></pre><h4 id="normalized-shape-x3D-4"><a href="#normalized-shape-x3D-4" class="headerlink" title="normalized_shape &#x3D; 4"></a>normalized_shape &#x3D; 4</h4><p><strong>如果normalized_shape &#x3D; 4，则被看做一个整数的list</strong>，此时LayerNorm会对输入的最后一维进行归一化，normalized_shape &#x3D; 4需要和输入的最后一维一致。</p><p>比如此时输入的数据维度是[3, 4]，则对3个长度为4的向量求均值方差，得到3个均值和3个方差，分别对这3行进行归一化（每一行的4个数字都是均值为0，方差为1）；LayerNorm中的weight和bias也分别包含4个数字，重复使用3次，对每一行进行仿射变换（仿射变换即上述的运算公式，乘weight中对应的数字后，再加bias中对应的数字），并会在反向传播时得到学习。</p><h4 id="normalized-shape-x3D-3-4-or-torch-Size-3-4"><a href="#normalized-shape-x3D-3-4-or-torch-Size-3-4" class="headerlink" title="normalized_shape &#x3D; [3, 4] or torch.Size([3, 4])"></a>normalized_shape &#x3D; [3, 4] or torch.Size([3, 4])</h4><p>**如果输入的是个list或者torch.Size，比如[3, 4]或torch.Size([3, 4])**，则会对网络最后的两维进行归一化，且要求输入数据的最后两维尺寸也是[3, 4]。</p><p>假设此时输入的数据维度也是[3, 4]，首先对这12个数字求均值和方差，然后归一化这个12个数字；weight和bias也分别包含12个数字，分别对12个归一化后的数字进行仿射变换（仿射变换即乘以weight中对应的数字后，然后加bias中对应的数字），并会在反向传播时得到学习。</p><p>假设此时输入的数据维度是[N, 3, 4]，则对着N个[3,4]做和上述一样的操作，只是此时做仿射变换时，weight和bias被重复用了N次。</p><p>假设此时输入的数据维度是[N, T, 3, 4]，也是一样的，维度可以更多。</p><p><strong>注意：显然LayerNorm中weight和bias的shape就是传入的normalized_shape。</strong></p><h3 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a><strong>Batch Normalization</strong></h3><pre class="language-python" data-language="python"><code class="language-python">m <span class="token operator">=</span> nn<span class="token punctuation">.</span>BatchNorm1d<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>   <span class="token comment">#num_features指的是randn(20, 100)中（N, C）的第二维C</span><span class="token builtin">input</span> <span class="token operator">=</span> autograd<span class="token punctuation">.</span>Variable<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span> output <span class="token operator">=</span> m<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span> <span class="token comment"># Input: (N, C) or (N, C, L), where N is the batch size, C is the number of features or channels, and L is the sequence length</span><span class="token comment"># Output: (N, C) or (N, C, L) (same shape as input)</span></code></pre><pre class="language-python" data-language="python"><code class="language-python">m <span class="token operator">=</span> nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">35</span><span class="token punctuation">,</span> <span class="token number">45</span><span class="token punctuation">)</span>output <span class="token operator">=</span> m<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span><span class="token comment"># Input: (N, C, H, W)</span><span class="token comment"># Output: (N, C, H, W) (same shape as input)</span></code></pre> <pre class="language-python" data-language="python"><code class="language-python">m <span class="token operator">=</span> nn<span class="token punctuation">.</span>BatchNorm3d<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">35</span><span class="token punctuation">,</span> <span class="token number">45</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>output <span class="token operator">=</span> m<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span><span class="token comment"># Input: (N, C, D, H, W)</span><span class="token comment"># Output: (N, C, D, H, W) (same shape as input)</span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Pytorch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LayerNorm </tag>
+            
+            <tag> BatchNorm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Vanilla Neural Networks</title>
       <link href="/2022/05/28/vanilla-neural-networks/"/>
       <url>/2022/05/28/vanilla-neural-networks/</url>
