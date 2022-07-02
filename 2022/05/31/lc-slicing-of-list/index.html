@@ -261,7 +261,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-05-31
+                    2022-06-29
                 </div>
                 
 
@@ -288,52 +288,52 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Slicing-of-List"><a href="#Slicing-of-List" class="headerlink" title="Slicing of List"></a><strong>Slicing of List</strong></h2><pre class="language-none"><code class="language-none">a &#x3D; [0,1,2,3,4,5,6,7,8,9]
-# 当索引只有一个数时，表示切取某一个元素。
-&gt;&gt;&gt;a[0]
-&gt;&gt;&gt;0
-&gt;&gt;&gt;a[-4]
-&gt;&gt;&gt;6
+                <h2 id="Slicing-of-List"><a href="#Slicing-of-List" class="headerlink" title="Slicing of List"></a><strong>Slicing of List</strong></h2><pre class="language-python" data-language="python"><code class="language-python">a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token comment"># 当索引只有一个数时，表示切取某一个元素。</span>
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span><span class="token number">0</span>
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span><span class="token number">6</span>
 
-# 从左往右
-&gt;&gt;&gt;a[:]
-&gt;&gt;&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-# 从左往右
-&gt;&gt;&gt;a[::]
-&gt;&gt;&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-# 从右往左
-&gt;&gt;&gt;a[::-1]
-&gt;&gt;&gt; [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+<span class="token comment"># 从左往右</span>
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token comment"># 从左往右</span>
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token comment"># 从右往左</span>
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
 
-# step&#x3D;1，从左往右取值，start_index&#x3D;1到end_index&#x3D;6同样表示从左往右取值。
-&gt;&gt;&gt;a[1:6]
-&gt;&gt;&gt; [1, 2, 3, 4, 5]
+<span class="token comment"># step=1，从左往右取值，start_index=1到end_index=6同样表示从左往右取值。</span>
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">6</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
 
-&gt;&gt;&gt;a[1:6:-1]
-&gt;&gt;&gt; []
-# 输出为空列表，说明没取到数据。
-# step&#x3D;-1，决定了从右往左取值，而start_index&#x3D;1到end_index&#x3D;6决定了从左往右取值，两者矛盾，所以为空。
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token comment"># 输出为空列表，说明没取到数据。</span>
+<span class="token comment"># step=-1，决定了从右往左取值，而start_index=1到end_index=6决定了从左往右取值，两者矛盾，所以为空。</span>
 
 
-&gt;&gt;&gt;a[6:2]
-&gt;&gt;&gt; []
-# 同样输出为空列表。
-# step&#x3D;1，决定了从左往右取值，而start_index&#x3D;6到end_index&#x3D;2决定了从右往左取值，两者矛盾，所以为空。
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token comment"># 同样输出为空列表。</span>
+<span class="token comment"># step=1，决定了从左往右取值，而start_index=6到end_index=2决定了从右往左取值，两者矛盾，所以为空。</span>
 
-&gt;&gt;&gt;a[:6]
-&gt;&gt;&gt; [0, 1, 2, 3, 4, 5]
-# step&#x3D;1，表示从左往右取值，而start_index省略时，表示从端点开始，因此这里的端点是“起点”，即从“起点”值0开始一直取到end_index&#x3D;6（该点不包括）。
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">6</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+<span class="token comment"># step=1，表示从左往右取值，而start_index省略时，表示从端点开始，因此这里的端点是“起点”，即从“起点”值0开始一直取到end_index=6（该点不包括）。</span>
 
-&gt;&gt;&gt;a[:6:-1]
-&gt;&gt;&gt; [9, 8, 7]
-# step&#x3D;-1，从右往左取值，而start_index省略时，表示从端点开始，因此这里的端点是“终点”，即从“终点”值9开始一直取到end_index&#x3D;6（该点不包括）。
-&gt;&gt;&gt;a[6:]
-&gt;&gt;&gt; [6, 7, 8, 9]
-# step&#x3D;1，从左往右取值，从start_index&#x3D;6开始，一直取到“终点”值9。
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span>
+<span class="token comment"># step=-1，从右往左取值，而start_index省略时，表示从端点开始，因此这里的端点是“终点”，即从“终点”值9开始一直取到end_index=6（该点不包括）。</span>
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+<span class="token comment"># step=1，从左往右取值，从start_index=6开始，一直取到“终点”值9。</span>
 
-&gt;&gt;&gt;a[6::-1]
-&gt;&gt;&gt; [6, 5, 4, 3, 2, 1, 0]
-# step&#x3D;-1，从右往左取值，从start_index&#x3D;6开始，一直取到“起点”0。
+<span class="token operator">>></span><span class="token operator">></span>a<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token comment"># step=-1，从右往左取值，从start_index=6开始，一直取到“起点”0。</span>
 
 </code></pre>
 

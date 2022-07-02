@@ -363,7 +363,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-05-30
+                    2022-07-02
                 </div>
                 
 
@@ -595,8 +595,8 @@ lr <span class="token operator">=</span> <span class="token number">0.05</span> 
         num_batches<span class="token operator">+=</span><span class="token number">1</span>
 
         <span class="token comment"># compute some stats</span>
-        running_loss <span class="token operator">+=</span> loss<span class="token operator">**</span><span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">**</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        error <span class="token operator">=</span> utils<span class="token punctuation">.</span>get_error<span class="token punctuation">(</span> scores<span class="token operator">**</span><span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">**</span> <span class="token punctuation">,</span> minibatch_label<span class="token punctuation">)</span>
+        running_loss <span class="token operator">+=</span> loss<span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        error <span class="token operator">=</span> utils<span class="token punctuation">.</span>get_error<span class="token punctuation">(</span> scores<span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> minibatch_label<span class="token punctuation">)</span>
         running_error <span class="token operator">+=</span> error<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span>
         num_batches<span class="token operator">+=</span><span class="token number">1</span>
 
