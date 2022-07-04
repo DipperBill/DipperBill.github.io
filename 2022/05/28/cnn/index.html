@@ -363,7 +363,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-07-03
+                    2022-07-04
                 </div>
                 
 
@@ -399,6 +399,7 @@ mod <span class="token operator">=</span> nn<span class="token punctuation">.</s
 <p>inputs: 2 channels — every channel is a feature map, 灰度图片只有一个feature map；彩色图片一般3个feature map（RGB）</p>
 <p>output: 5 activation maps — 5个激活映射，每个filter都会产生一个，所以有5个filters</p>
 <p>filters are 3x3, padding with one layer of zero to not shrink anything</p>
+<p><img src="/2022/05/28/cnn/howfilerswork.png" alt="How filters work?"></p>
 <h2 id="Receptive-Field"><a href="#Receptive-Field" class="headerlink" title="Receptive Field"></a><strong>Receptive Field</strong></h2><p>感受野（Receptive Field）的定义是卷积神经网络每一层输出的特征图（feature map）上的像素点在输入图片上映射的区域大小。再通俗点的解释是，特征图上的一个点对应输入图上的区域，如图。</p>
 <p><img src="/2022/05/28/cnn/receptivefield.jpg" alt="Receptive Field"></p>
 <p>两个3*3卷积层的串联相当于1个5*5的卷积层，3个3*3的卷积层串联相当于1个7*7的卷积层，即<strong>3个3*3卷积层的感受野大小相当于1个7*7的卷积层</strong>。但是3个3*3的卷积层参数量只有<strong>7*7</strong>的一半左右，同时前者可以有<strong>3个</strong>非线性操作，而后者<strong>只有1个</strong>非线性操作，这样使得前者对于特征的学习能力更强。</p>
