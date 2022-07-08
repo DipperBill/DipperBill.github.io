@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Image Data Processing&amp;Augmentation, Cipher&#39;s Blog">
-    <meta name="description" content="Summary of image data processing with CNN training">
+    <meta name="description" content="Image data processing with CNN training">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -489,6 +489,7 @@ data_jitter_brightness <span class="token operator">=</span> transforms<span cla
     <span class="token keyword">return</span> train_loader<span class="token punctuation">,</span>val_loader</code></pre>
 
 <h3 id="Define-a-net-and-Train-it"><a href="#Define-a-net-and-Train-it" class="headerlink" title="Define a net and Train it"></a>Define a net and Train it</h3><p>Take simple CNN net as an example.</p>
+<p>This CNN net is modified from <strong>VGG</strong>, but it has smaller depth.</p>
 <pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
 <span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>functional <span class="token keyword">as</span> F
 
@@ -818,7 +819,7 @@ start <span class="token operator">=</span> time<span class="token punctuation">
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Summary of image data processing with CNN training
+                            Image data processing with CNN training
                         
                     </div>
                     <div class="publish-info">
