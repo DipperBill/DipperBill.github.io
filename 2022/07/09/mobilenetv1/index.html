@@ -389,8 +389,7 @@
                 <h2 id="MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications"><a href="#MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications" class="headerlink" title="MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications"></a>MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</h2><h3 id="MobileNet-v1"><a href="#MobileNet-v1" class="headerlink" title="MobileNet v1"></a>MobileNet v1</h3><p>简单来说，MobileNet v1将常规卷积替换为深度可分离卷积（<strong>depthWise convolution</strong>）的VGG网络</p>
 <p><img src="/2022/07/09/mobilenetv1/mobilenetvsvgg.png" alt="Left: Conventional Conv, Right: DepthWise Conv"></p>
 <p>从上图中可以看出，VGG的卷积块就是1个常规3*3卷积、1个BN、1个ReLU激活层；MobileNet v1则是1个3*3深度可分离卷积和1个1*1卷积，后面分别跟着1个BN和1个ReLU激活函数。需要注意的是，MobileNet v1的ReLU指的是<strong>ReLU6</strong>，ReLU6对激活输出做了一个输出限幅，使得Max Output不超过6，<strong>目的是防止过大的激活输出值带来较大的精度损失</strong>。</p>
-<h3 id="Depthwise-Convolution"><a href="#Depthwise-Convolution" class="headerlink" title="Depthwise Convolution"></a>Depthwise Convolution</h3><p>从维度的角度看，卷积核可以看成是一个空间维(Width and Height)和通道维的组合，而卷积操作则可以视为空间相关性和通道相关性的联合映射。</p>
-<p>从inception的1*1卷积来看，卷积中的空间相关性和通道相关性是可以解耦的，将它们分开进行映射，可能会达到更好的效果。</p>
+<h3 id="Depthwise-Convolution"><a href="#Depthwise-Convolution" class="headerlink" title="Depthwise Convolution"></a>Depthwise Convolution</h3><p>从维度的角度看，卷积核可以看成是一个空间维(Width and Height)和通道维的组合，而卷积操作则可以视为空间相关性和通道相关性的联合映射。从inception的1*1卷积来看，卷积中的空间相关性和通道相关性是可以解耦的，将它们分开进行映射，可能会达到更好的效果。</p>
 <p>深度可分离卷积是在1*1卷积基础上的一种创新。主要包括两个部分：深度卷积和1*1卷积。深度卷积的目的在于对输入的每一个通道都单独使用一个卷积核对其进行卷积，也就是通道分离后再组合。1*1卷积的目的则在于加强深度。下面以一个例子来看一下深度可分离卷积。</p>
 <p>假设我们用128个3*3*3的filter对一个7*7*3的输入进行卷积，可得到5*5*128的输出。如下图所示：</p>
 <p><img src="/2022/07/09/mobilenetv1/putongcnn.png" alt="Conventional Convolution">	</p>
@@ -400,7 +399,9 @@
 <p><img src="/2022/07/09/mobilenetv1/depthwisejuanjinie.png" alt="Depthwise Convolution"></p>
 <p>第一步深度卷积的计算量：5*5*1*3*3*1*3&#x3D;675。第二步1x1卷积的计算量：5*5*128*1*1*3&#x3D;9600，合计计算量为10275次。</p>
 <p>相同的卷积计算输出，深度可分离卷积要比常规卷积节省12倍的计算成本。所以<strong>深度可分离卷积是MobileNet v1能够轻量化的关键原因</strong>。</p>
-<p><img src="/2022/07/09/mobilenetv1/mobilenet1debijiao.png" alt="Testing on ImageNet acc"></p>
+<p>MobileNet v1 Body Architecture</p>
+<p><img src="/2022/07/09/mobilenetv1/mobilenetv1jiegou.png" alt="MobileNet v1 Body Architecture"></p>
+<h3 id="Comparison-with-VGG-16-and-Googlenetl"><a href="#Comparison-with-VGG-16-and-Googlenetl" class="headerlink" title="Comparison with VGG 16 and Googlenetl"></a>Comparison with VGG 16 and Googlenetl</h3><p><img src="/2022/07/09/mobilenetv1/mobilenet1debijiao.png" alt="Testing on ImageNet acc"></p>
 <p>相比于VGG 16，MobileNet v1精度损失极小的前提下，参数量几乎减少为VGG 16的1&#x2F;32。</p>
 
                 
