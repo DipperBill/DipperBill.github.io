@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MobileNetV1, Cipher&#39;s Blog">
-    <meta name="description" content="Notes of MobileNet v1">
+    <meta name="keywords" content="MobileNetV2, Cipher&#39;s Blog">
+    <meta name="description" content="Notes of MobileNet v2">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>MobileNetV1 | Cipher&#39;s Blog</title>
+    <title>MobileNetV2 | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -202,12 +202,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MobileNetV1</h1>
+                    <h1 class="description center-align post-title">MobileNetV2</h1>
                 </div>
             </div>
         </div>
@@ -352,14 +352,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-07-09
+                    2022-07-12
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-07-10
+                    2022-07-12
                 </div>
                 
 
@@ -386,22 +386,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications"><a href="#MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications" class="headerlink" title="MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications"></a>MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</h2><h3 id="MobileNet-v1"><a href="#MobileNet-v1" class="headerlink" title="MobileNet v1"></a>MobileNet v1</h3><p>简单来说，MobileNet v1将常规卷积替换为深度可分离卷积（<strong>depthWise convolution</strong>）的VGG网络</p>
-<p><img src="/2022/07/09/mobilenetv1/mobilenetvsvgg.png" alt="Left: Conventional Conv, Right: DepthWise Conv"></p>
-<p>从上图中可以看出，VGG的卷积块就是1个常规3*3卷积、1个BN、1个ReLU激活层；MobileNet v1则是1个3*3深度可分离卷积和1个1*1卷积，后面分别跟着1个BN和1个ReLU激活函数。需要注意的是，MobileNet v1的ReLU指的是<strong>ReLU6</strong>，ReLU6对激活输出做了一个输出限幅，使得Max Output不超过6，<strong>目的是防止过大的激活输出值带来较大的精度损失</strong>。</p>
-<h3 id="Depthwise-Convolution"><a href="#Depthwise-Convolution" class="headerlink" title="Depthwise Convolution"></a>Depthwise Convolution</h3><p>从维度的角度看，卷积核可以看成是一个空间维(Width and Height)和通道维的组合，而卷积操作则可以视为空间相关性和通道相关性的联合映射。从inception的1*1卷积来看，卷积中的空间相关性和通道相关性是可以解耦的，将它们分开进行映射，可能会达到更好的效果。</p>
-<p>深度可分离卷积是在1*1卷积基础上的一种创新。主要包括两个部分：深度卷积和1*1卷积。深度卷积的目的在于对输入的每一个通道都单独使用一个卷积核对其进行卷积，也就是通道分离后再组合。1*1卷积的目的则在于加强深度。下面以一个例子来看一下深度可分离卷积。</p>
-<p>假设我们用128个3*3*3的filter对一个7*7*3的输入进行卷积，可得到5*5*128的输出。如下图所示：</p>
-<p><img src="/2022/07/09/mobilenetv1/putongcnn.png" alt="Conventional Convolution">	</p>
-<p>其计算量为5*5*128*3*3*3&#x3D;86400。</p>
-<p>现在看如何使用深度可分离卷积来实现同样的结果。深度可分离卷积的第一步是深度卷积（Depth-Wise）。这里的深度卷积，就是<strong>分别用3个3*3*1的滤波器对输入的3个通道分别做卷积</strong>，也就是说要做3次卷积，每次卷积都有一个5*5*1的输出，组合在一起便是5*5*3的输出。</p>
-<p>现在为了拓展深度达到128，我们需要执行深度可分离卷积的第二步：1x1卷积（Point-Wise）。现在我们用128个1*1*3的滤波器对5*5*3进行卷积，就可以得到5*5*128的输出。完整过程如下图所示：</p>
-<p><img src="/2022/07/09/mobilenetv1/depthwisejuanjinie.png" alt="Depthwise Convolution"></p>
-<p>第一步深度卷积的计算量：5*5*1*3*3*1*3&#x3D;675。第二步1x1卷积的计算量：5*5*128*1*1*3&#x3D;9600，合计计算量为10275次。</p>
-<p>相同的卷积计算输出，深度可分离卷积要比常规卷积节省12倍的计算成本。所以<strong>深度可分离卷积是MobileNet v1能够轻量化的关键原因</strong>。</p>
-<h3 id="MobileNet-v1-Body-Architecture"><a href="#MobileNet-v1-Body-Architecture" class="headerlink" title="MobileNet v1 Body Architecture"></a>MobileNet v1 Body Architecture</h3><p><img src="/2022/07/09/mobilenetv1/mobilenetv1jiegou.png" alt="MobileNet v1 Body Architecture"></p>
-<h3 id="Comparison-with-VGG-16-and-Googlenetl"><a href="#Comparison-with-VGG-16-and-Googlenetl" class="headerlink" title="Comparison with VGG 16 and Googlenetl"></a>Comparison with VGG 16 and Googlenetl</h3><p><img src="/2022/07/09/mobilenetv1/mobilenet1debijiao.png" alt="Testing on ImageNet acc"></p>
-<p>相比于VGG 16，MobileNet v1精度损失极小的前提下，参数量几乎减少为VGG 16的1&#x2F;32。</p>
+                <h2 id="MobileNetV2-Inverted-Residuals-and-Linear-Bottlenecks"><a href="#MobileNetV2-Inverted-Residuals-and-Linear-Bottlenecks" class="headerlink" title="MobileNetV2: Inverted Residuals and Linear Bottlenecks"></a>MobileNetV2: Inverted Residuals and Linear Bottlenecks</h2><h3 id="MobileNetV1遗留的问题"><a href="#MobileNetV1遗留的问题" class="headerlink" title="MobileNetV1遗留的问题"></a>MobileNetV1遗留的问题</h3><h4 id="1、V1的结构问题："><a href="#1、V1的结构问题：" class="headerlink" title="1、V1的结构问题："></a>1、V1的结构问题：</h4><p>MobileNet v1 的结构其实非常简单，论文里是一个非常复古的直筒结构，类似于VGG一样。这种结构的性价比其实不高，后续一系列的 ResNet, DenseNet 等结构已经证明通过复用图像特征，使用 Concat&#x2F;Eltwise+ 等操作进行融合，能极大提升网络的性价比。</p>
+<h4 id="2、Depthwise-Convolution的潜在问题："><a href="#2、Depthwise-Convolution的潜在问题：" class="headerlink" title="2、Depthwise Convolution的潜在问题："></a>2、Depthwise Convolution的潜在问题：</h4><p>MobileNet v1首次引入了深度可分离卷积，Depthwise Conv确实是大大降低了计算量，而且N×N Depthwise +1×1PointWise的结构在性能上也能接近N×N Conv。在实际使用的时候，我们发现Depthwise部分的kernel有不少是空的。当时我们认为，Depthwise每个kernel_dim相对于普通Conv要小得多，过小的kernel_dim，加上ReLU的激活影响下，使得神经元输出很容易变为0，所以就<strong>学废了</strong>。ReLU对于0的输出的梯度为0，所以一旦陷入0输出，就没法恢复了。我们还发现，这个问题在定点化低精度训练的时候会进一步放大。</p>
+<h3 id="Linear-Bottleneck"><a href="#Linear-Bottleneck" class="headerlink" title="Linear Bottleneck"></a>Linear Bottleneck</h3><p>为了解决信息损失问题，v2的解决方案是直接将每个Bottleneck最后一层的ReLU6换成线性函数，具体为v2网络中就是将最后的Point-Wise卷积的ReLU6都换成线性函数，也即是Linear Bottleneck。</p>
+<p><img src="/2022/07/12/mobilenetv2/v1hev2decharelu6.jpg" alt="ReLU6 -&gt; Linear"></p>
+<h3 id="Expansion-layer"><a href="#Expansion-layer" class="headerlink" title="Expansion layer"></a>Expansion layer</h3><p>通过1x1PW卷积层进行升维</p>
+<p><img src="/2022/07/12/mobilenetv2/mbnv2zaidwqianzuodsaq.png" alt="Expansion Layer"></p>
+<p>定义升维系数<strong>t</strong></p>
+<h3 id="Inverted-Residuals"><a href="#Inverted-Residuals" class="headerlink" title="Inverted Residuals"></a>Inverted Residuals</h3><p>MobileNet V1虽然采取了深度可分离卷积，但其网络主体仍然是VGG的直筒型结构。MobieNet V2借鉴了ResNet的残差结构，在v1网络结构基础上加入了跳跃连接。相较于ResNet的残差块结构，v2给这种结构命名为Inverted resdiual block，即倒残差块。倒残差主要体现在</p>
+<p><img src="/2022/07/12/mobilenetv2/resnethembnet2duibi.png" alt="Resnet vs MobileNetV2"></p>
+<h3 id="Architechture-of-MobileNetV2"><a href="#Architechture-of-MobileNetV2" class="headerlink" title="Architechture of MobileNetV2"></a>Architechture of MobileNetV2</h3><p><img src="/2022/07/12/mobilenetv2/mbnetv2architechture.png" alt="Architechture of MobileNetV2"></p>
+<p><em>t</em> 是输入通道的倍增系数（即中间部分的通道数是输入通道数的多少倍）</p>
+<p><em>n</em> 是该模块重复次数</p>
+<p><em>c</em> 是输出通道数</p>
+<p><em>s</em> 是该模块第一次重复时的 stride（之后重复都是 stride 1）</p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>1.实时性和精度得到较好的平衡。</p>
+<p>2.对于低维空间而言，进行线性映射会保存特征，而非线性映射会破坏特征。</p>
 
                 
             </div>
@@ -428,7 +428,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/07/09/mobilenetv1/">https://dipperbill.github.io/2022/07/09/mobilenetv1/</a>
+                    <a href="https://dipperbill.github.io/2022/07/12/mobilenetv2/">https://dipperbill.github.io/2022/07/12/mobilenetv2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -519,9 +519,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2022/07/12/mobilenetv2/">
                     <div class="card-image">
@@ -539,9 +540,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -554,6 +555,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -576,31 +578,31 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/07/07/image-data-processing-augmentation/">
+                <a href="/2022/07/09/mobilenetv1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Image Data Processing&amp;Augmentation">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="MobileNetV1">
                         
-                        <span class="card-title">Image Data Processing&amp;Augmentation</span>
+                        <span class="card-title">MobileNetV1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Image data processing with CNN training
+                            Notes of MobileNet v1
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
+                            <a href="/categories/Essay/" class="post-category">
+                                    Essay
                                 </a>
                             
                             
@@ -610,8 +612,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Image-Data-Processing-and-Augmentation/">
-                        <span class="chip bg-color">Image Data Processing and Augmentation</span>
+                    <a href="/tags/MobileNet/">
+                        <span class="chip bg-color">MobileNet</span>
+                    </a>
+                    
+                    <a href="/tags/DepthWise-Conv/">
+                        <span class="chip bg-color">DepthWise Conv</span>
                     </a>
                     
                 </div>
