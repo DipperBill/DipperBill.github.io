@@ -510,6 +510,29 @@ tensor<span class="token punctuation">(</span><span class="token punctuation">[<
           <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 
 
+
+<h3 id="torch-nn-Flatten-start-dim-x3D-1-end-dim-x3D-1"><a href="#torch-nn-Flatten-start-dim-x3D-1-end-dim-x3D-1" class="headerlink" title="torch.nn.Flatten(start_dim&#x3D;1, end_dim&#x3D;-1)"></a>torch.nn.Flatten(start_dim&#x3D;1, end_dim&#x3D;-1)</h3><p>注意默认开始的维度是第一维！</p>
+<p><img src="/2022/07/02/summary-of-tensor-function-in-pytorch/nndeflattenshishenmns.png" alt="torch.nn.Flatten(start_dim=1, end_dim=-1)"></p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token comment"># With default parameters</span>
+m <span class="token operator">=</span> nn<span class="token punctuation">.</span>Flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+output <span class="token operator">=</span> m<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span>
+output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># torch.Size([32, 25])</span>
+
+<span class="token comment"># With non-default parameters</span>
+m <span class="token operator">=</span> nn<span class="token punctuation">.</span>Flatten<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+output <span class="token operator">=</span> m<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span>
+output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># torch.Size([160, 5])</span></code></pre>
+
+
+
+
+
+
+
+
                 
             </div>
             <hr/>

@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MobileNetV2, Cipher&#39;s Blog">
-    <meta name="description" content="Notes of MobileNet v2">
+    <meta name="keywords" content="Params and FLOPs, Cipher&#39;s Blog">
+    <meta name="description" content="Notes of Params and FLOPs Calculating">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>MobileNetV2 | Cipher&#39;s Blog</title>
+    <title>Params and FLOPs | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -202,12 +202,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MobileNetV2</h1>
+                    <h1 class="description center-align post-title">Params and FLOPs</h1>
                 </div>
             </div>
         </div>
@@ -323,12 +323,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MobileNet/">
-                                <span class="chip bg-color">MobileNet</span>
+                            <a href="/tags/Params-Calculating/">
+                                <span class="chip bg-color">Params Calculating</span>
                             </a>
                         
-                            <a href="/tags/DepthWise-Conv/">
-                                <span class="chip bg-color">DepthWise Conv</span>
+                            <a href="/tags/FLOPs/">
+                                <span class="chip bg-color">FLOPs</span>
                             </a>
                         
                     </div>
@@ -339,8 +339,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Essay/" class="post-category">
-                                Essay
+                            <a href="/categories/Pytorch/" class="post-category">
+                                Pytorch
                             </a>
                         
                     </div>
@@ -352,7 +352,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-07-12
+                    2022-07-13
                 </div>
                 
 
@@ -386,22 +386,42 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MobileNetV2-Inverted-Residuals-and-Linear-Bottlenecks"><a href="#MobileNetV2-Inverted-Residuals-and-Linear-Bottlenecks" class="headerlink" title="MobileNetV2: Inverted Residuals and Linear Bottlenecks"></a>MobileNetV2: Inverted Residuals and Linear Bottlenecks</h2><h3 id="MobileNetV1遗留的问题"><a href="#MobileNetV1遗留的问题" class="headerlink" title="MobileNetV1遗留的问题"></a>MobileNetV1遗留的问题</h3><h4 id="1、V1的结构问题："><a href="#1、V1的结构问题：" class="headerlink" title="1、V1的结构问题："></a>1、V1的结构问题：</h4><p>MobileNet v1 的结构其实非常简单，论文里是一个非常复古的直筒结构，类似于VGG一样。这种结构的性价比其实不高，后续一系列的 ResNet, DenseNet 等结构已经证明通过复用图像特征，使用 Concat&#x2F;Eltwise+ 等操作进行融合，能极大提升网络的性价比。</p>
-<h4 id="2、Depthwise-Convolution的潜在问题："><a href="#2、Depthwise-Convolution的潜在问题：" class="headerlink" title="2、Depthwise Convolution的潜在问题："></a>2、Depthwise Convolution的潜在问题：</h4><p>MobileNet v1首次引入了深度可分离卷积，Depthwise Conv确实是大大降低了计算量，而且N×N Depthwise +1×1PointWise的结构在性能上也能接近N×N Conv。在实际使用的时候，我们发现Depthwise部分的kernel有不少是空的。当时我们认为，Depthwise每个kernel_dim相对于普通Conv要小得多，过小的kernel_dim，加上ReLU的激活影响下，使得神经元输出很容易变为0，所以就<strong>学废了</strong>。ReLU对于0的输出的梯度为0，所以一旦陷入0输出，就没法恢复了。我们还发现，这个问题在定点化低精度训练的时候会进一步放大。</p>
-<h3 id="Linear-Bottleneck"><a href="#Linear-Bottleneck" class="headerlink" title="Linear Bottleneck"></a>Linear Bottleneck</h3><p>为了解决信息损失问题，v2的解决方案是直接将每个Bottleneck最后一层的ReLU6换成线性函数，具体为v2网络中就是将最后的Point-Wise卷积的ReLU6都换成线性函数，也即是Linear Bottleneck。</p>
-<p><img src="/2022/07/12/mobilenetv2/v1hev2decharelu6.jpg" alt="ReLU6 -&gt; Linear"></p>
-<h3 id="Expansion-layer"><a href="#Expansion-layer" class="headerlink" title="Expansion layer"></a>Expansion layer</h3><p>通过1x1PW卷积层进行升维</p>
-<p><img src="/2022/07/12/mobilenetv2/mbnv2zaidwqianzuodsaq.png" alt="Expansion Layer"></p>
-<p>定义升维系数<strong>t</strong></p>
-<h3 id="Inverted-Residuals"><a href="#Inverted-Residuals" class="headerlink" title="Inverted Residuals"></a>Inverted Residuals</h3><p>MobileNet V1虽然采取了深度可分离卷积，但其网络主体仍然是VGG的直筒型结构。MobieNet V2借鉴了ResNet的残差结构，在v1网络结构基础上加入了跳跃连接。相较于ResNet的残差块结构，v2给这种结构命名为Inverted resdiual block，即倒残差块。倒残差主要体现在</p>
-<p><img src="/2022/07/12/mobilenetv2/resnethembnet2duibi.png" alt="Resnet vs MobileNetV2"></p>
-<h3 id="Architechture-of-MobileNetV2"><a href="#Architechture-of-MobileNetV2" class="headerlink" title="Architechture of MobileNetV2"></a>Architechture of MobileNetV2</h3><p><img src="/2022/07/12/mobilenetv2/mbnetv2architechture.png" alt="Architechture of MobileNetV2"></p>
-<p><em>t</em> 是输入通道的倍增系数（即中间部分的通道数是输入通道数的多少倍）</p>
-<p><em>n</em> 是该模块重复次数</p>
-<p><em>c</em> 是输出通道数</p>
-<p><em>s</em> 是该模块第一次重复时的 stride（之后重复都是 stride 1）</p>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>1.实时性和精度得到较好的平衡。</p>
-<p>2.对于低维空间而言，进行线性映射会保存特征，而非线性映射会破坏特征。</p>
+                <h2 id="Params-and-FLOPs"><a href="#Params-and-FLOPs" class="headerlink" title="Params and FLOPs"></a>Params and FLOPs</h2><p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mzpmzk/article/details/82976871">https://blog.csdn.net/mzpmzk/article/details/82976871</a></p>
+<h3 id="参数数量（Params）"><a href="#参数数量（Params）" class="headerlink" title="参数数量（Params）"></a>参数数量（Params）</h3><p>指模型含有多少参数，直接决定模型的大小，也影响推断时对内存的占用量<br>单位通常为M，通常参数用 float32 表示，所以模型大小是参数数量的4倍左右<br>参数数量与模型大小转换示例：10M float32 bit &#x3D; 10M × 4 Byte &#x3D; 40MB （注意位 bit 和字节 Byte 的区别）</p>
+<h3 id="理论计算量（FLOPs）"><a href="#理论计算量（FLOPs）" class="headerlink" title="理论计算量（FLOPs）"></a>理论计算量（FLOPs）</h3><p>指模型推断时需要多少计算次数，是<strong>floating point operations</strong>的缩写（注意 s 小写），可以用来衡量算法&#x2F;模型的复杂度，这关系到算法速度，大模型的单位通常为 G（GFLOPs：10亿次浮点运算），小模型单位通常为 M<br>通常只考虑**乘加操作(Multi-Adds)**的数量，而且只考虑 CONV 和 FC 等参数层的计算量，忽略 BN 和 PReLU 等等。一般情况，CONV 和 FC 层也会忽略仅纯加操作的计算量，如 bias 偏置加和 shotcut 残差加等，目前有 BN 的卷积层可以不加 bias<br>PS：也有用 <strong>MAC（Memory Access Cost）</strong> 表示的</p>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><p>假设卷积核大小为$K_h \times K_w$，输入通道数为$C_{in}$，输出通道数为$C_{out}$，输出特征图的宽和高分别为$W$ 和$H$，这里忽略偏置项</p>
+<p><strong>CONV标准卷积层</strong></p>
+<p>Params: $K_h \times K_w \times C_{in} \times C_{out}$</p>
+<p>FLOPs: $K_h \times K_w \times C_{in} \times C_{out} \times H \times W &#x3D; params \times H \times W$</p>
+<p><strong>FC 全连接层（相当于 k&#x3D;1）</strong></p>
+<p>Params: $C_{in} \times C_{out}$</p>
+<p>FLOPs: $C_{in} \times C_{out}$</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Lyken17/pytorch-OpCounter">参数量与计算量参考网址：https://github.com/Lyken17/pytorch-OpCounter</a></p>
+<p><strong>How to install</strong></p>
+<p><code>pip install thop</code> or <code>pip install --upgrade git+https://github.com/Lyken17/pytorch-OpCounter.git</code></p>
+<p><strong>How to use</strong></p>
+<p>basic usage</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> torchvision<span class="token punctuation">.</span>models <span class="token keyword">import</span> resnet50
+<span class="token keyword">from</span> thop <span class="token keyword">import</span> profile
+model <span class="token operator">=</span> resnet50<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">)</span>
+macs<span class="token punctuation">,</span> params <span class="token operator">=</span> profile<span class="token punctuation">(</span>model<span class="token punctuation">,</span> inputs<span class="token operator">=</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+
+<p>Define the rule for 3rd party module.</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">YourModule</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># your definition</span>
+<span class="token keyword">def</span> <span class="token function">count_your_model</span><span class="token punctuation">(</span>model<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># your rule here</span>
+
+<span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">)</span>
+macs<span class="token punctuation">,</span> params <span class="token operator">=</span> profile<span class="token punctuation">(</span>model<span class="token punctuation">,</span> inputs<span class="token operator">=</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                        custom_ops<span class="token operator">=</span><span class="token punctuation">&#123;</span>YourModule<span class="token punctuation">:</span> count_your_model<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>	</code></pre>
+
+<p>Improve the output readability</p>
+<p>Call <code>thop.clever_format</code> to give a better format of the output.</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> thop <span class="token keyword">import</span> clever_format
+macs<span class="token punctuation">,</span> params <span class="token operator">=</span> clever_format<span class="token punctuation">(</span><span class="token punctuation">[</span>macs<span class="token punctuation">,</span> params<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"%.3f"</span><span class="token punctuation">)</span></code></pre>
+
 
                 
             </div>
@@ -428,7 +448,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/07/12/mobilenetv2/">https://dipperbill.github.io/2022/07/12/mobilenetv2/</a>
+                    <a href="https://dipperbill.github.io/2022/07/13/params-and-flops/">https://dipperbill.github.io/2022/07/13/params-and-flops/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -466,12 +486,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/MobileNet/">
-                                    <span class="chip bg-color">MobileNet</span>
+                                <a href="/tags/Params-Calculating/">
+                                    <span class="chip bg-color">Params Calculating</span>
                                 </a>
                             
-                                <a href="/tags/DepthWise-Conv/">
-                                    <span class="chip bg-color">DepthWise Conv</span>
+                                <a href="/tags/FLOPs/">
+                                    <span class="chip bg-color">FLOPs</span>
                                 </a>
                             
                         </div>
@@ -519,9 +539,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2022/07/13/params-and-flops/">
                     <div class="card-image">
@@ -539,9 +560,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -554,6 +575,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -576,24 +598,24 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/07/09/mobilenetv1/">
+                <a href="/2022/07/12/mobilenetv2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="MobileNetV1">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="MobileNetV2">
                         
-                        <span class="card-title">MobileNetV1</span>
+                        <span class="card-title">MobileNetV2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Notes of MobileNet v1
+                            Notes of MobileNet v2
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-12
                             </span>
                         <span class="publish-author">
                             
