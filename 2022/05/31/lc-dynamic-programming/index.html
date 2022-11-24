@@ -475,15 +475,34 @@ total<span class="token punctuation">.</span>append<span class="token punctuatio
 
 <h3 id="剪绳子问题"><a href="#剪绳子问题" class="headerlink" title="剪绳子问题"></a>剪绳子问题</h3><p>给你一根长度为 n 的绳子，请把绳子剪成整数长度的 m 段（m、n都是整数，n&gt;1并且m&gt;1），每段绳子的长度记为 k[0],k[1]…k[m-1] 。请问 k[0]k[1]…k[m-1] 可能的最大乘积是多少？例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。</p>
 <pre class="language-python" data-language="python"><code class="language-python">dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
-	<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>：
-        	dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span>j<span class="token punctuation">]</span><span class="token operator">*</span>j<span class="token punctuation">,</span> j<span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">-</span>j<span class="token punctuation">)</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">)</span>
-        <span class="token keyword">return</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span></code></pre>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>：
+    	dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span>j<span class="token punctuation">]</span><span class="token operator">*</span>j<span class="token punctuation">,</span> j<span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">-</span>j<span class="token punctuation">)</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">)</span>
+    	<span class="token keyword">return</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span></code></pre>
 
 
 
 <p>当然本题还可以采用贪心法则：尽可能分解出多的 3，3 的个数为 a，得到余数 b 可能为 0，1，2</p>
 <p>最优：3 。把数字 n 可能拆为多个因子3，余数可能为0,1,2三种情况。<br>次优：2 。若余数为 2；则保留，不再拆为1+1。<br>最差：1 。若余数为 11 ；则应把一份3+1替换为2+2，因为2×2&gt;3×1。</p>
+<pre class="language-python" data-language="python"><code class="language-python">a <span class="token operator">=</span> n <span class="token operator">//</span> <span class="token number">3</span>
+b <span class="token operator">=</span> n <span class="token operator">%</span> <span class="token number">3</span>
+<span class="token keyword">if</span> b <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token number">3</span> <span class="token operator">**</span> a
+<span class="token keyword">elif</span> b <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token number">3</span> <span class="token operator">**</span> <span class="token punctuation">(</span>a <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">4</span>
+<span class="token keyword">elif</span> b <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token number">3</span> <span class="token operator">**</span> a <span class="token operator">*</span> <span class="token number">2</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
 
                 
             </div>
