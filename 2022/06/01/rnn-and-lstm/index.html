@@ -363,7 +363,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-07-13
+                    2022-12-23
                 </div>
                 
 
@@ -483,8 +483,7 @@ output<span class="token punctuation">,</span> hn <span class="token operator">=
 <span class="token comment"># output.size() = torch.Size([21, 8, 6])</span>
 <span class="token comment"># hn.size() = torch.Size([7, 8, 6])</span></code></pre>
 
-
-
+<h3 id="Why-tanh？"><a href="#Why-tanh？" class="headerlink" title="Why tanh？"></a>Why tanh？</h3><p>RNN的每个时间步的权重是相同的，bp过程相当于权重的连续相乘，因此比CNN更容易出现梯度消失和梯度爆炸，因此采用tanh比较多。tanh也会出现梯度消失和梯度爆炸，但是相比于Sigmoid[0, 0.25]更好</p>
 <h3 id="RNN-training-in-10-epoch"><a href="#RNN-training-in-10-epoch" class="headerlink" title="RNN training in 10 epoch"></a><strong>RNN training in 10 epoch</strong></h3><pre class="language-python" data-language="python"><code class="language-python">hidden_size<span class="token operator">=</span><span class="token number">150</span>
 net <span class="token operator">=</span> three_layer_recurrent_net<span class="token punctuation">(</span> hidden_size <span class="token punctuation">)</span>
 criterion <span class="token operator">=</span> nn<span class="token punctuation">.</span>CrossEntropyLoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -546,6 +545,12 @@ start<span class="token operator">=</span>time<span class="token punctuation">.<
 
 <h3 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a><strong>LSTM</strong></h3><p>help alleviate the problem of vanishing and exploding gradients in RNN</p>
 <p>长短期记忆（LSTM），隐藏状态是⼀个元组(h, c)，即hidden state和cell state</p>
+<p>其中的input</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token builtin">input</span><span class="token punctuation">(</span>seq_len<span class="token punctuation">,</span> batch_size<span class="token punctuation">,</span> input_size<span class="token punctuation">)</span></code></pre>
+
+<p><strong>seq_len</strong>：在文本处理中，如果一个句子有7个单词，则seq_len&#x3D;7；在时间序列预测中，假设我们用前24个小时的负荷来预测下一时刻负荷，则seq_len&#x3D;24。</p>
+<p><strong>batch_size</strong>：一次性输入LSTM中的样本个数。在文本处理中，可以一次性输入很多个句子；在时间序列预测中，也可以一次性输入很多条数据。</p>
+<p><strong>input_size</strong>：在文本处理中，由于一个单词没法参与运算，因此我们得通过Word2Vec来对单词进行嵌入表示，将每一个单词表示成一个向量，此时input_size&#x3D;embedding_size。比如每个句子中有五个单词，每个单词用一个100维向量来表示，那么这里<strong>input_size&#x3D;100</strong>；在时间序列预测中，比如需要预测负荷，每一个负荷都是一个单独的值，都可以直接参与运算，因此并不需要将每一个负荷表示成一个向量，此时<strong>input_size&#x3D;1</strong>。 但如果我们使用多变量进行预测，比如我们利用前24小时每一时刻的[负荷、风速、温度、压强、湿度、天气、节假日信息]来预测下一时刻的负荷，那么此时<strong>input_size&#x3D;7</strong></p>
 <pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">three_layer_recurrent_net</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
 	<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> hidden_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
 		<span class="token builtin">super</span><span class="token punctuation">(</span>three_layer_recurrent_net<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
