@@ -359,7 +359,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-07-13
+                    2023-01-09
                 </div>
                 
 
@@ -393,7 +393,7 @@
 <p>根据上面规律，我们可以把x写成f0，当有n-1层隐层时，fn是输出，如果要求wl也就是第l层的权重，反向传播中涉及的偏导计算为：</p>
 <p><img src="/2022/05/30/dnn-gradient-vanishing-or-exploding/vanish_3.png"></p>
 <p>前半部分是关于激活函数的导数的累乘，后半部分是关于权重值的累乘。</p>
-<p>激活函数如sigmoid函数，其导数的取值范围是(0, 0.25]，当网络层数很深的时候，多个小于1的数进行累乘，结果是趋向于0的，此时梯度反向传播的时候，根据参数更新公式：$$w <em>{l} &#x3D; w</em>{l}-lr·\frac{\partial loss}{\partial w _{l}} $$ ，偏导部分的取值趋于0，那么该参数得不到更新，这就是梯度消失现象。消失的只是更新参数所需要的梯度，而不一定是参数被更新到0。</p>
+<p>激活函数如sigmoid函数，其导数的取值范围是(0, 0.25]，当网络层数很深的时候，多个小于1的数进行累乘，结果是趋向于0的，此时梯度反向传播的时候，根据参数更新公式：$w <em>{l} &#x3D; w</em>{l}-lr·\frac{\partial loss}{\partial w _{l}}$ ，偏导部分的取值趋于0，那么该参数得不到更新，这就是梯度消失现象。消失的只是更新参数所需要的梯度，而不一定是参数被更新到0。</p>
 <p>关于权重值的累乘，当我们初始化权值很大的时候，多个大于1的数累乘，结果是+∞，此时就出现了梯度爆炸现象。</p>
 <h2 id="NN-detach"><a href="#NN-detach" class="headerlink" title="NN: detach()"></a><strong>NN: detach()</strong></h2><p>detach()是生成了一个新的variable，detach_()是对本身的更改，</p>
 <p>detach()</p>
@@ -802,7 +802,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2022</span>
+                <span id="year">2022-2023</span>
             
             <a href="/about" target="_blank">Yikai Wang</a>
 <!--             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> -->
