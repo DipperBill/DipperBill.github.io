@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LC Dynamic Programming, Cipher&#39;s Blog">
-    <meta name="description" content="Dynamic Programming problems in LC">
+    <meta name="keywords" content="LC Sliding Window, Cipher&#39;s Blog">
+    <meta name="description" content="Sliding Window problems in LeetCode">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>LC Dynamic Programming | Cipher&#39;s Blog</title>
+    <title>LC Sliding Window | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -202,12 +202,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">LC Dynamic Programming</h1>
+                    <h1 class="description center-align post-title">LC Sliding Window</h1>
                 </div>
             </div>
         </div>
@@ -327,8 +327,8 @@
                                 <span class="chip bg-color">Python</span>
                             </a>
                         
-                            <a href="/tags/Dynamic-Programming/">
-                                <span class="chip bg-color">Dynamic Programming</span>
+                            <a href="/tags/Sliding-Window/">
+                                <span class="chip bg-color">Sliding Window</span>
                             </a>
                         
                     </div>
@@ -352,7 +352,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-05-31
+                    2023-04-08
                 </div>
                 
 
@@ -386,52 +386,151 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a><strong>Dynamic Programming</strong></h2><h3 id="打家劫舍问题"><a href="#打家劫舍问题" class="headerlink" title="打家劫舍问题"></a>打家劫舍问题</h3><p>偷了 <strong>i</strong> 家，则 <strong>i-1</strong> 家和 <strong>i+1</strong> 家都不能偷</p>
-<p>nums列表存储的是第 <strong>i</strong> 家中的金币数量</p>
-<p>dp列表存储的是前 <strong>i</strong> 家时小偷能够获得的最大金币数</p>
-<pre class="language-python" data-language="python"><code class="language-python">dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> size
-dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-dp<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">:</span>
-	dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+                <h2 id="Sliding-Window-Algorithms"><a href="#Sliding-Window-Algorithms" class="headerlink" title="Sliding Window Algorithms"></a><strong>Sliding Window Al</strong>gorithms</h2><h3 id="最小覆盖子串"><a href="#最小覆盖子串" class="headerlink" title="最小覆盖子串"></a>最小覆盖子串</h3><p>给你一个字符串 s ，一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 “” 。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">minWindow</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s<span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">"""
+        :type s: str
+        :type t: str
+        :rtype: str
+        """</span>
+        ls <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+        lt <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+        start <span class="token operator">=</span> <span class="token number">0</span>
+        end <span class="token operator">=</span> <span class="token number">0</span>
+        minl <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token string">'inf'</span><span class="token punctuation">)</span>
+        res1 <span class="token operator">=</span> <span class="token number">0</span>
+        res2 <span class="token operator">=</span> <span class="token number">0</span>
+        dic <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span> c <span class="token keyword">in</span> t<span class="token punctuation">:</span>
+            dic<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> dic<span class="token punctuation">.</span>get<span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+        window <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span> c <span class="token keyword">in</span> t<span class="token punctuation">:</span>
+            window<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        valid <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token comment"># 一般而言，[left, right)/[start, end)的窗口比较大众，因为默认end得往后走一位，打印的时候确实不包括end</span>
+        <span class="token keyword">while</span> end <span class="token operator">&lt;</span> ls<span class="token punctuation">:</span>
+            tmp <span class="token operator">=</span> s<span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+            <span class="token comment"># 更新窗口向右移动之后的window情况</span>
+            <span class="token keyword">if</span> tmp <span class="token keyword">in</span> window<span class="token punctuation">:</span>
+                window<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>
+                <span class="token comment"># 如果t中对应的某个元素有两个，那么只有当其满足两个的时候才会+1</span>
+                <span class="token comment"># 但是实际上，应该是找到一个就+1捏，但是这样又会导致tmp一直等于某一个数使得valid疯狂自增</span>
+                <span class="token comment"># 因此必须是小于等于的时候就可以增加valid了</span>
+                <span class="token keyword">if</span> window<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> dic<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                    valid <span class="token operator">+=</span> <span class="token number">1</span>
+            <span class="token comment"># end什么时候+1也有说法</span>
+            end <span class="token operator">+=</span> <span class="token number">1</span>
 
-<h3 id="最大正方形"><a href="#最大正方形" class="headerlink" title="最大正方形"></a>最大正方形</h3><p>matrix存储元素为0或1字符的一个m x n矩阵，要求其中1元素能组成的最大正方形的边长</p>
-<p>dp列表存储的第<strong>i</strong>行第<strong>j</strong>列可能构成的最大正方形边长</p>
-<p>如果(i,j)处元素为1，则此处能构成的最大正方形边长为(i-1,j) (i,j-1) (i-1,j-1)中能构成的最大边长的最小值+1</p>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">:</span>
-	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
-		<span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">or</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-			dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
-		<span class="token keyword">elif</span> i <span class="token operator">!=</span> <span class="token number">0</span> <span class="token keyword">and</span> j <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
-			<span class="token keyword">if</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'1'</span><span class="token punctuation">:</span>
-				dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
-			<span class="token keyword">else</span><span class="token punctuation">:</span>
-				dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-		<span class="token keyword">if</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token builtin">max</span><span class="token punctuation">:</span>
-			<span class="token builtin">max</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span></code></pre>
+            <span class="token comment"># debug专用，找到移动规律</span>
+            <span class="token comment"># print(start, end)</span>
+
+            <span class="token comment"># 当窗口需要收缩，左边需要减小</span>
+            <span class="token keyword">while</span> valid <span class="token operator">==</span> lt<span class="token punctuation">:</span>
+                <span class="token comment"># 在这里更新最小的覆盖字串</span>
+                <span class="token keyword">if</span> end <span class="token operator">-</span> start <span class="token operator">&lt;</span> minl<span class="token punctuation">:</span>
+                    res1 <span class="token operator">=</span> start
+                    <span class="token comment"># 说实话长度这里必须必须注意end的意义，左闭右开</span>
+                    res2 <span class="token operator">=</span> end <span class="token operator">-</span> start
+                    minl <span class="token operator">=</span> res2
+                <span class="token comment"># 先提取出将要被剔除出窗口的元素，start什么时候+1都行，但得先取值</span>
+                d <span class="token operator">=</span> s<span class="token punctuation">[</span>start<span class="token punctuation">]</span>
+                start <span class="token operator">+=</span> <span class="token number">1</span>
+                <span class="token keyword">if</span> window<span class="token punctuation">.</span>get<span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    <span class="token keyword">if</span> window<span class="token punctuation">[</span>d<span class="token punctuation">]</span> <span class="token operator">==</span> dic<span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                        valid <span class="token operator">-=</span> <span class="token number">1</span>
+                    window<span class="token punctuation">[</span>d<span class="token punctuation">]</span> <span class="token operator">-=</span> <span class="token number">1</span>
 
 
-
-<h3 id="最长公共子序列-LCS"><a href="#最长公共子序列-LCS" class="headerlink" title="最长公共子序列(LCS)"></a>最长公共子序列(LCS)</h3><p>设X&#x3D;x1x2…xm和Y&#x3D;y1y2…yn是两个序列，Z&#x3D;z1z2…zk是这两个序列的一个最长公共子序列。</p>
-<ol>
-<li><p>如果xm&#x3D;yn，那么zk&#x3D;xm&#x3D;yn，且Zk-1是Xm-1，Yn-1的一个最长公共子序列；</p>
-</li>
-<li><p>如果xm≠yn，那么zk≠xm，意味着Z是Xm-1，Y的一个最长公共子序列；</p>
-</li>
-<li><p>如果xm≠yn，那么zk≠yn，意味着Z是X，Yn-1的一个最长公共子序列。</p>
-</li>
-</ol>
-<p>我们使用dp[i][j]来表示第一个串的前i位和第二个串的前j位中的最长公共子序列，我们很容易能发现当两个串的任意一个串的当前长度为0时，它的最长公共子序列的长度为0，所以先对dp数组的边界进行初始化。然后我们发现，如果a[i]&#x3D;b[j]，dp[i][j]&#x3D;dp[i-1][j-1]+1，很显然，当比对的位字符一样时，能得到该状态转移方程。如果a[i]≠b[j]，dp[i][j]&#x3D;max(dp[i-1][j],dp[i][j-1])，该状态转移方程是由上面的2，3条取最大值得到的。</p>
-<pre class="language-python" data-language="python"><code class="language-python">l1 <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>text1<span class="token punctuation">)</span>
-l2 <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>text2<span class="token punctuation">)</span>
-dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token punctuation">(</span>l2<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>l1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> l1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> l2 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> text1<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">!=</span> text2<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> res2<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> s<span class="token punctuation">[</span>res1<span class="token punctuation">:</span>res1<span class="token operator">+</span>res2<span class="token punctuation">]</span>
         <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">''</span></code></pre>
+
+<h3 id="找到字符串中所有字母异位词"><a href="#找到字符串中所有字母异位词" class="headerlink" title="找到字符串中所有字母异位词"></a>找到字符串中所有字母异位词</h3><p>给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。</p>
+<p>异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。</p>
+<pre class="language-python" data-language="python"><code class="language-python">ls <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+start <span class="token operator">=</span> <span class="token number">0</span>
+end <span class="token operator">=</span> <span class="token number">0</span>
+valid <span class="token operator">=</span> <span class="token number">0</span>
+res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+dic <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">for</span> c <span class="token keyword">in</span> p<span class="token punctuation">:</span>
+    dic<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> dic<span class="token punctuation">.</span>get<span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+window <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token comment"># window有个优化，就是到后面判定某字符在dic内，然后更新window，就不用重新遍历一次了</span>
+<span class="token keyword">for</span> c <span class="token keyword">in</span> p<span class="token punctuation">:</span>
+    window<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">while</span> end <span class="token operator">&lt;</span> ls<span class="token punctuation">:</span>
+    tmp <span class="token operator">=</span> s<span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+    <span class="token comment"># 更新窗口向右移动之后的window情况</span>
+    <span class="token keyword">if</span> tmp <span class="token keyword">in</span> window<span class="token punctuation">:</span>
+        window<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token keyword">if</span> window<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> dic<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span><span class="token punctuation">:</span>
+            valid <span class="token operator">+=</span> <span class="token number">1</span>
+    
+    end <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token comment"># debug专用，找到移动规律</span>
+    <span class="token comment"># print(start, end)</span>
+    <span class="token comment"># 当窗口需要收缩</span>
+    <span class="token keyword">while</span> valid <span class="token operator">==</span> <span class="token builtin">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 更新异位词的判断</span>
+        <span class="token keyword">if</span> end <span class="token operator">-</span> start <span class="token operator">==</span> <span class="token builtin">len</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>start<span class="token punctuation">)</span>
+
+        d <span class="token operator">=</span> s<span class="token punctuation">[</span>start<span class="token punctuation">]</span>
+        start <span class="token operator">+=</span> <span class="token number">1</span>
+
+        <span class="token keyword">if</span> window<span class="token punctuation">.</span>get<span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> window<span class="token punctuation">[</span>d<span class="token punctuation">]</span> <span class="token operator">==</span> dic<span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                valid <span class="token operator">-=</span> <span class="token number">1</span>
+            window<span class="token punctuation">[</span>d<span class="token punctuation">]</span> <span class="token operator">-=</span> <span class="token number">1</span>
+
+    
+<span class="token keyword">return</span> res</code></pre>
+
+
+
+<h3 id="无重复字符的最长子串"><a href="#无重复字符的最长子串" class="headerlink" title="无重复字符的最长子串"></a>无重复字符的最长子串</h3><p>给定一个字符串 s ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<pre class="language-python" data-language="python"><code class="language-python">ls <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+start <span class="token operator">=</span> <span class="token number">0</span>
+end <span class="token operator">=</span> <span class="token number">0</span>
+maxl <span class="token operator">=</span> <span class="token number">0</span>
+window <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+jihe <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">while</span> end <span class="token operator">&lt;</span> ls<span class="token punctuation">:</span>
+    tmp <span class="token operator">=</span> s<span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+    window<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span> <span class="token operator">=</span> window<span class="token punctuation">.</span>get<span class="token punctuation">(</span>tmp<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+    
+    end <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token comment"># debug专用，找到移动规律</span>
+    <span class="token comment"># print(start, end)</span>
+    <span class="token comment"># 当窗口需要收缩</span>
+    <span class="token keyword">while</span> window<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token comment"># 更新异位词的判断</span>
+        d <span class="token operator">=</span> s<span class="token punctuation">[</span>start<span class="token punctuation">]</span>
+        start <span class="token operator">+=</span> <span class="token number">1</span>
+        
+        window<span class="token punctuation">[</span>d<span class="token punctuation">]</span> <span class="token operator">-=</span> <span class="token number">1</span>
+    <span class="token keyword">if</span> end <span class="token operator">-</span> start <span class="token operator">></span> maxl<span class="token punctuation">:</span>
+        maxl <span class="token operator">=</span> end <span class="token operator">-</span> start
+    
+<span class="token keyword">return</span> maxl</code></pre>
+
+<h3 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a>最长公共子串</h3><pre class="language-python" data-language="python"><code class="language-python">dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token builtin">max</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> s1<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> s2<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
             dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span>
-<span class="token keyword">return</span> dp<span class="token punctuation">[</span>l1<span class="token punctuation">]</span><span class="token punctuation">[</span>l2<span class="token punctuation">]</span> </code></pre>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">if</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">></span><span class="token builtin">max</span><span class="token punctuation">:</span>
+            <span class="token builtin">max</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>  
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">max</span><span class="token punctuation">)</span></code></pre>
+
+
 
 <h3 id="有效括号组合"><a href="#有效括号组合" class="headerlink" title="有效括号组合"></a>有效括号组合</h3><p>数字 n 代表生成括号的对数，设计一个函数，用于能够生成所有可能的并且<strong>有效的</strong>括号组合。</p>
 <p><strong>固定第n个括号的左括号在最左，则n-1个括号可以在n括号内或外</strong>，通过动态规划可以直到小于n时的任意个括号的有效组合</p>
@@ -455,6 +554,54 @@ total<span class="token punctuation">.</span>append<span class="token punctuatio
 					s<span class="token punctuation">.</span>append<span class="token punctuation">(</span>en<span class="token punctuation">)</span>
 	total<span class="token punctuation">.</span>append<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
 <span class="token keyword">return</span> total<span class="token punctuation">[</span>n<span class="token punctuation">]</span></code></pre>
+
+
+
+<h3 id="剪绳子问题"><a href="#剪绳子问题" class="headerlink" title="剪绳子问题"></a>剪绳子问题</h3><p>给你一根长度为 n 的绳子，请把绳子剪成整数长度的 m 段（m、n都是整数，n&gt;1并且m&gt;1），每段绳子的长度记为 k[0],k[1]…k[m-1] 。请问 k[0]k[1]…k[m-1] 可能的最大乘积是多少？例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。</p>
+<pre class="language-python" data-language="python"><code class="language-python">dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>：
+    	dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span>j<span class="token punctuation">]</span><span class="token operator">*</span>j<span class="token punctuation">,</span> j<span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">-</span>j<span class="token punctuation">)</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">)</span>
+    	<span class="token keyword">return</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span></code></pre>
+
+
+
+<p>当然本题还可以采用贪心法则：尽可能分解出多的 3，3 的个数为 a，得到余数 b 可能为 0，1，2</p>
+<p>最优：3 。把数字 n 可能拆为多个因子3，余数可能为0,1,2三种情况。<br>次优：2 。若余数为 2；则保留，不再拆为1+1。<br>最差：1 。若余数为 1；则应把一份3+1替换为2+2，因为2×2&gt;3×1。</p>
+<pre class="language-python" data-language="python"><code class="language-python">a <span class="token operator">=</span> n <span class="token operator">//</span> <span class="token number">3</span>
+b <span class="token operator">=</span> n <span class="token operator">%</span> <span class="token number">3</span>
+<span class="token keyword">if</span> b <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token number">3</span> <span class="token operator">**</span> a
+<span class="token keyword">elif</span> b <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token number">3</span> <span class="token operator">**</span> <span class="token punctuation">(</span>a <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">4</span>
+<span class="token keyword">elif</span> b <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token number">3</span> <span class="token operator">**</span> a <span class="token operator">*</span> <span class="token number">2</span></code></pre>
+
+<h3 id="完全平方数"><a href="#完全平方数" class="headerlink" title="完全平方数"></a>完全平方数</h3><p>给你一个整数 n ，返回和为 n 的完全平方数的最少数量。完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。</p>
+<p>本质上是一道背包问题，背包是数字，物品是比该数字小的完全平方数。</p>
+<p>当数字 i 能拆出某个完全平方数 j * j 时，dp[ i ] &#x3D; dp[ i - j * j] + 1，当无法拆出时，dp[ i ]不更新</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">numSquares</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">"""
+        :type n: int
+        :rtype: int
+        """</span>
+        dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token operator">**</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+        dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            j <span class="token operator">=</span> <span class="token number">1</span>
+            <span class="token keyword">while</span> j <span class="token operator">**</span> <span class="token number">2</span> <span class="token operator">&lt;=</span> i<span class="token punctuation">:</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i <span class="token operator">-</span> j<span class="token operator">*</span>j<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                j <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token keyword">return</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span></code></pre>
+
+
+
+
+
+
+
+
 
 
 
@@ -492,7 +639,7 @@ total<span class="token punctuation">.</span>append<span class="token punctuatio
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/05/31/lc-dynamic-programming/">https://dipperbill.github.io/2022/05/31/lc-dynamic-programming/</a>
+                    <a href="https://dipperbill.github.io/2023/04/08/lc-sliding-window/">https://dipperbill.github.io/2023/04/08/lc-sliding-window/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -534,8 +681,8 @@ total<span class="token punctuation">.</span>append<span class="token punctuatio
                                     <span class="chip bg-color">Python</span>
                                 </a>
                             
-                                <a href="/tags/Dynamic-Programming/">
-                                    <span class="chip bg-color">Dynamic Programming</span>
+                                <a href="/tags/Sliding-Window/">
+                                    <span class="chip bg-color">Sliding Window</span>
                                 </a>
                             
                         </div>
@@ -583,29 +730,84 @@ total<span class="token punctuation">.</span>append<span class="token punctuatio
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2022/06/01/rnn-and-lstm/">
+                <a href="/2023/04/08/lc-sliding-window/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="From RNN to LSTM">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="LC Sliding Window">
                         
-                        <span class="card-title">From RNN to LSTM</span>
+                        <span class="card-title">LC Sliding Window</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Notes of Recurrent Neural Network and LSTM
+                            Sliding Window problems in LeetCode
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-01
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Leetcode/" class="post-category">
+                                    Leetcode
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/Sliding-Window/">
+                        <span class="chip bg-color">Sliding Window</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/13/params-and-flops/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Params and FLOPs">
+                        
+                        <span class="card-title">Params and FLOPs</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Notes of Params and FLOPs Calculating
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -621,65 +823,12 @@ total<span class="token punctuation">.</span>append<span class="token punctuatio
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RNN/">
-                        <span class="chip bg-color">RNN</span>
+                    <a href="/tags/Params-Calculating/">
+                        <span class="chip bg-color">Params Calculating</span>
                     </a>
                     
-                    <a href="/tags/Embedding/">
-                        <span class="chip bg-color">Embedding</span>
-                    </a>
-                    
-                    <a href="/tags/LSTM/">
-                        <span class="chip bg-color">LSTM</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/05/31/lc-slicing-of-list/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="LC Slicing of List">
-                        
-                        <span class="card-title">LC Slicing of List</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Basic grammar of Python about Slicing
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Leetcode/" class="post-category">
-                                    Leetcode
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/FLOPs/">
+                        <span class="chip bg-color">FLOPs</span>
                     </a>
                     
                 </div>
