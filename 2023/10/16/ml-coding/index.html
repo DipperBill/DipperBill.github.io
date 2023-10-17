@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MobileNetV1, Cipher&#39;s Blog">
-    <meta name="description" content="Notes of MobileNet v1">
+    <meta name="keywords" content="ML Coding, Cipher&#39;s Blog">
+    <meta name="description" content="ML Coding">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>MobileNetV1 | Cipher&#39;s Blog</title>
+    <title>ML Coding | Cipher&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -202,12 +202,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MobileNetV1</h1>
+                    <h1 class="description center-align post-title">ML Coding</h1>
                 </div>
             </div>
         </div>
@@ -323,12 +323,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MobileNet/">
-                                <span class="chip bg-color">MobileNet</span>
+                            <a href="/tags/Python/">
+                                <span class="chip bg-color">Python</span>
                             </a>
                         
-                            <a href="/tags/DepthWise-Conv/">
-                                <span class="chip bg-color">DepthWise Conv</span>
+                            <a href="/tags/ML-Coding/">
+                                <span class="chip bg-color">ML Coding</span>
                             </a>
                         
                     </div>
@@ -339,8 +339,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Essay/" class="post-category">
-                                Essay
+                            <a href="/categories/Python/" class="post-category">
+                                Python
                             </a>
                         
                     </div>
@@ -352,14 +352,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-07-09
+                    2023-10-17
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2022-07-23
+                    2023-10-18
                 </div>
                 
 
@@ -386,22 +386,137 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications"><a href="#MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications" class="headerlink" title="MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications"></a>MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</h2><h3 id="MobileNet-v1"><a href="#MobileNet-v1" class="headerlink" title="MobileNet v1"></a>MobileNet v1</h3><p>简单来说，MobileNet v1将常规卷积替换为深度可分离卷积（<strong>depthWise convolution</strong>）的VGG网络</p>
-<p><img src="/2022/07/09/mobilenetv1/mobilenetvsvgg.png" alt="Left: Conventional Conv, Right: DepthWise Conv"></p>
-<p>从上图中可以看出，VGG的卷积块就是1个常规3*3卷积、1个BN、1个ReLU激活层；MobileNet v1则是1个3*3深度可分离卷积和1个1*1卷积，后面分别跟着1个BN和1个ReLU激活函数。需要注意的是，MobileNet v1的ReLU指的是<strong>ReLU6</strong>，ReLU6对激活输出做了一个输出限幅，使得Max Output不超过6，<strong>目的是防止过大的激活输出值带来较大的精度损失</strong>。</p>
-<h3 id="Depthwise-Convolution"><a href="#Depthwise-Convolution" class="headerlink" title="Depthwise Convolution"></a>Depthwise Convolution</h3><p>从维度的角度看，卷积核可以看成是一个空间维(Width and Height)和通道维的组合，而卷积操作则可以视为空间相关性和通道相关性的联合映射。从inception的1*1卷积来看，卷积中的空间相关性和通道相关性是可以解耦的，将它们分开进行映射，可能会达到更好的效果。</p>
-<p>深度可分离卷积是在1*1卷积基础上的一种创新。主要包括两个部分：深度卷积和1*1卷积。深度卷积的目的在于对输入的每一个通道都单独使用一个卷积核对其进行卷积，也就是通道分离后再组合。1*1卷积的目的则在于加强深度。下面以一个例子来看一下深度可分离卷积。</p>
-<p>假设我们用128个3*3*3的filter对一个7*7*3的输入进行卷积，可得到5*5*128的输出。如下图所示：</p>
-<p><img src="/2022/07/09/mobilenetv1/putongcnn.png" alt="Conventional Convolution">	</p>
-<p>其计算量为5*5*128*3*3*3&#x3D;86400。</p>
-<p>现在看如何使用深度可分离卷积来实现同样的结果。深度可分离卷积的第一步是深度卷积（Depth-Wise）。这里的深度卷积，就是<strong>分别用3个3*3*1的滤波器对输入的3个通道分别做卷积</strong>，也就是说要做3次卷积，每次卷积都有一个5*5*1的输出，组合在一起便是5*5*3的输出。</p>
-<p>现在为了拓展深度达到128，我们需要执行深度可分离卷积的第二步：1x1卷积（Point-Wise）。现在我们用128个1*1*3的滤波器对5*5*3进行卷积，就可以得到5*5*128的输出。完整过程如下图所示：</p>
-<p><img src="/2022/07/09/mobilenetv1/depthwisejuanjinie.png" alt="Depthwise Convolution"></p>
-<p>第一步深度卷积的计算量：5*5*1*3*3*1*3&#x3D;675。第二步1x1卷积的计算量：5*5*128*1*1*3&#x3D;9600，合计计算量为10275次。</p>
-<p>相同的卷积计算输出，深度可分离卷积要比常规卷积节省12倍的计算成本。所以<strong>深度可分离卷积是MobileNet v1能够轻量化的关键原因</strong>。</p>
-<h3 id="MobileNet-v1-Body-Architecture"><a href="#MobileNet-v1-Body-Architecture" class="headerlink" title="MobileNet v1 Body Architecture"></a>MobileNet v1 Body Architecture</h3><p><img src="/2022/07/09/mobilenetv1/mobilenetv1jiegou.png" alt="MobileNet v1 Body Architecture"></p>
-<h3 id="Comparison-with-VGG-16-and-GoogleNet"><a href="#Comparison-with-VGG-16-and-GoogleNet" class="headerlink" title="Comparison with VGG 16 and GoogleNet"></a>Comparison with VGG 16 and GoogleNet</h3><p><img src="/2022/07/09/mobilenetv1/mobilenet1debijiao.png" alt="Testing on ImageNet acc"></p>
-<p>相比于VGG 16，MobileNet v1精度损失极小的前提下，参数量几乎减少为VGG 16的1&#x2F;32。</p>
+                <h2 id="ML-Coding"><a href="#ML-Coding" class="headerlink" title="ML Coding"></a><strong>ML Coding</strong></h2><h3 id="Linear-Regression"><a href="#Linear-Regression" class="headerlink" title="Linear Regression"></a>Linear Regression</h3><p>The simplest way with Math Methods. Pay attention to the <strong>numerator</strong> and <strong>denominator</strong>.</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 输入数据</span>
+X <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+Y <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+
+<span class="token comment"># 计算平均值</span>
+mean_x <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>X<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token builtin">len</span><span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+mean_y <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>Y<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token builtin">len</span><span class="token punctuation">(</span>Y<span class="token punctuation">)</span>
+
+<span class="token comment"># 计算斜率和截距</span>
+numerator <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">(</span>X<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> mean_x<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>Y<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> mean_y<span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>X<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+denominator <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">(</span>X<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> mean_x<span class="token punctuation">)</span> <span class="token operator">**</span> <span class="token number">2</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>X<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+slope <span class="token operator">=</span> numerator <span class="token operator">/</span> denominator
+intercept <span class="token operator">=</span> mean_y <span class="token operator">-</span> slope <span class="token operator">*</span> mean_x
+
+<span class="token comment"># 打印结果</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"斜率:"</span><span class="token punctuation">,</span> slope<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"截距:"</span><span class="token punctuation">,</span> intercept<span class="token punctuation">)</span></code></pre>
+
+<p>With gradient descending, it has another form and it can be used within more complicated scenario.</p>
+<pre class="language-python" data-language="python"><code class="language-python">
+<span class="token keyword">import</span> random
+
+<span class="token comment"># 数据生成</span>
+<span class="token comment"># 假设X是一个矩阵，每行表示一个样本，每列表示一个特征</span>
+X <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>i<span class="token punctuation">,</span> i<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">]</span>  <span class="token comment"># 两个特征的例子</span>
+Y <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span> <span class="token operator">*</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">3</span> <span class="token operator">*</span> x<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> X<span class="token punctuation">]</span>
+
+<span class="token comment"># 梯度下降的线性回归模型</span>
+<span class="token keyword">def</span> <span class="token function">linear_regression</span><span class="token punctuation">(</span>X<span class="token punctuation">,</span> Y<span class="token punctuation">,</span> learning_rate<span class="token punctuation">,</span> epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    num_samples <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+    num_features <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>X<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    w <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> num_features  <span class="token comment"># 初始化权重列表</span>
+    b <span class="token operator">=</span> <span class="token number">0</span>  <span class="token comment"># 初始化偏置项</span>
+
+    <span class="token keyword">for</span> epoch <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        dw <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> num_features
+        db <span class="token operator">=</span> <span class="token number">0</span>
+
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_samples<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            y_pred <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>X<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">*</span> w<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_features<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> b  <span class="token comment"># 预测值</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_features<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                dw<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token operator">-</span><span class="token number">2</span> <span class="token operator">*</span> X<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token punctuation">(</span>Y<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> y_pred<span class="token punctuation">)</span>
+            db <span class="token operator">+=</span> <span class="token operator">-</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token punctuation">(</span>Y<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> y_pred<span class="token punctuation">)</span>
+
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_features<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            w<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">-=</span> <span class="token punctuation">(</span>dw<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">/</span> num_samples<span class="token punctuation">)</span> <span class="token operator">*</span> learning_rate
+        b <span class="token operator">-=</span> <span class="token punctuation">(</span>db <span class="token operator">/</span> num_samples<span class="token punctuation">)</span> <span class="token operator">*</span> learning_rate
+
+    <span class="token keyword">return</span> w<span class="token punctuation">,</span> b
+
+learning_rate <span class="token operator">=</span> <span class="token number">0.0001</span>
+epochs <span class="token operator">=</span> <span class="token number">1000</span>
+w<span class="token punctuation">,</span> b <span class="token operator">=</span> linear_regression<span class="token punctuation">(</span>X<span class="token punctuation">,</span> Y<span class="token punctuation">,</span> learning_rate<span class="token punctuation">,</span> epochs<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Linear Regression Model: Y = </span><span class="token interpolation"><span class="token punctuation">&#123;</span>w<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span></span><span class="token string">*X1 + </span><span class="token interpolation"><span class="token punctuation">&#123;</span>w<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span></span><span class="token string">*X2 + </span><span class="token interpolation"><span class="token punctuation">&#123;</span>b<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span></code></pre>
+
+
+
+<h3 id="Naive-Bayes-Classifier-with-Gaussian-Density-Function"><a href="#Naive-Bayes-Classifier-with-Gaussian-Density-Function" class="headerlink" title="Naive Bayes  Classifier with Gaussian Density Function"></a>Naive Bayes  Classifier with Gaussian Density Function</h3><p>The assumption is that the features are independent of each other. Why?</p>
+<ol>
+<li><p>In real life, there are often a lot of features, and each feature has a very multiple kinds of value. Therefore, estimating the subsequent probability values through statistics becomes almost impossible, which is why it is necessary to assume independence between features.</p>
+</li>
+<li><p>If we don’t assume that features are independent of each other, then when we do statistics, we need to look for them in the entire feature space. such as p (not handsome, not good personality, short height, not ambitious | married), We need to find the number of people who meet all four characteristics under the conditions of marriage: not handsome, not good personality, short height, and not ambitious. In this way, due to the sparsity of the data, it is easy to count them as 0. This is not appropriate.</p>
+</li>
+</ol>
+<pre class="language-python" data-language="python"><code class="language-python">
+<span class="token keyword">import</span> math
+
+<span class="token comment"># 训练数据</span>
+X_train <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">5.1</span><span class="token punctuation">,</span> <span class="token number">3.5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">4.9</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5.8</span><span class="token punctuation">,</span> <span class="token number">2.6</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">6.0</span><span class="token punctuation">,</span> <span class="token number">3.4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">6.7</span><span class="token punctuation">,</span> <span class="token number">3.1</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+Y_train <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">]</span>
+
+<span class="token comment"># 预测数据</span>
+X_test <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5.2</span><span class="token punctuation">,</span> <span class="token number">3.4</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">gaussian_density</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> mean<span class="token punctuation">,</span> std_dev<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> std_dev <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token comment"># Set a small pseudo variance to avoid division by zero</span>
+        pseudo_variance <span class="token operator">=</span> <span class="token number">0.0001</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        pseudo_variance <span class="token operator">=</span> std_dev
+    exponent <span class="token operator">=</span> math<span class="token punctuation">.</span>exp<span class="token punctuation">(</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">-</span> mean<span class="token punctuation">)</span> <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> pseudo_variance <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">/</span> <span class="token punctuation">(</span>math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> math<span class="token punctuation">.</span>pi<span class="token punctuation">)</span> <span class="token operator">*</span> pseudo_variance<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">*</span> exponent
+
+<span class="token keyword">def</span> <span class="token function">naive_bayes</span><span class="token punctuation">(</span>X_train<span class="token punctuation">,</span> Y_train<span class="token punctuation">,</span> X_test<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    classes <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">set</span><span class="token punctuation">(</span>Y_train<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    class_probabilities <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> cls <span class="token keyword">in</span> classes<span class="token punctuation">:</span>
+        class_indices <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> i<span class="token punctuation">,</span> y <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>Y_train<span class="token punctuation">)</span> <span class="token keyword">if</span> y <span class="token operator">==</span> cls<span class="token punctuation">]</span>
+        class_data <span class="token operator">=</span> <span class="token punctuation">[</span>X_train<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> class_indices<span class="token punctuation">]</span>
+        class_prob <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>class_data<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token builtin">len</span><span class="token punctuation">(</span>X_train<span class="token punctuation">)</span>
+        feature_probabilities <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token builtin">len</span><span class="token punctuation">(</span>X_test<span class="token punctuation">)</span>
+        <span class="token comment"># traversal the feature in one test sample</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>X_test<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment"># extract the i-th feature value of all samples with the same label</span>
+            feature_values <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> class_data<span class="token punctuation">]</span>
+            mean <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>feature_values<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token builtin">len</span><span class="token punctuation">(</span>feature_values<span class="token punctuation">)</span>
+            std_dev <span class="token operator">=</span> math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">(</span>x <span class="token operator">-</span> mean<span class="token punctuation">)</span> <span class="token operator">**</span> <span class="token number">2</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> feature_values<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token builtin">len</span><span class="token punctuation">(</span>feature_values<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token comment"># it means that in Normal Distribution with a mean of mu and a std_dev of sigma,</span>
+            <span class="token comment"># the probability density at x equals 2 is 0.888.</span>
+            feature_probabilities<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> gaussian_density<span class="token punctuation">(</span>X_test<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> mean<span class="token punctuation">,</span> std_dev<span class="token punctuation">)</span>
+        class_probabilities<span class="token punctuation">[</span>cls <span class="token punctuation">]</span> <span class="token operator">=</span> class_prob <span class="token operator">*</span> math<span class="token punctuation">.</span>prod<span class="token punctuation">(</span>feature_probabilities<span class="token punctuation">)</span>
+    predicted_class <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>class_probabilities<span class="token punctuation">,</span> key<span class="token operator">=</span>class_probabilities<span class="token punctuation">.</span>get<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> predicted_class
+
+predicted_class <span class="token operator">=</span> naive_bayes<span class="token punctuation">(</span>X_train<span class="token punctuation">,</span> Y_train<span class="token punctuation">,</span> X_test<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Predicted Class: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>predicted_class<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+
+
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 
             </div>
@@ -428,7 +543,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dipperbill.github.io/2022/07/09/mobilenetv1/">https://dipperbill.github.io/2022/07/09/mobilenetv1/</a>
+                    <a href="https://dipperbill.github.io/2023/10/16/ml-coding/">https://dipperbill.github.io/2023/10/16/ml-coding/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -466,12 +581,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/MobileNet/">
-                                    <span class="chip bg-color">MobileNet</span>
+                                <a href="/tags/Python/">
+                                    <span class="chip bg-color">Python</span>
                                 </a>
                             
-                                <a href="/tags/DepthWise-Conv/">
-                                    <span class="chip bg-color">DepthWise Conv</span>
+                                <a href="/tags/ML-Coding/">
+                                    <span class="chip bg-color">ML Coding</span>
                                 </a>
                             
                         </div>
@@ -519,50 +634,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2022/07/12/mobilenetv2/">
+                <a href="/2023/10/16/ml-coding/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="MobileNetV2">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ML Coding">
                         
-                        <span class="card-title">MobileNetV2</span>
+                        <span class="card-title">ML Coding</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Notes of MobileNet v2
+                            ML Coding
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Essay/" class="post-category">
-                                    Essay
+                            <a href="/categories/Python/" class="post-category">
+                                    Python
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MobileNet/">
-                        <span class="chip bg-color">MobileNet</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
-                    <a href="/tags/DepthWise-Conv/">
-                        <span class="chip bg-color">DepthWise Conv</span>
+                    <a href="/tags/ML-Coding/">
+                        <span class="chip bg-color">ML Coding</span>
                     </a>
                     
                 </div>
@@ -576,31 +693,31 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/07/07/image-data-processing-augmentation/">
+                <a href="/2023/04/10/lc-path-sum/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Image Data Processing with CNN training">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="LC DFS">
                         
-                        <span class="card-title">Image Data Processing with CNN training</span>
+                        <span class="card-title">LC DFS</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Image Data Classification Project
+                            DFS & Backtracking Algorithms in LeetCode
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Pytorch/" class="post-category">
-                                    Pytorch
+                            <a href="/categories/Leetcode/" class="post-category">
+                                    Leetcode
                                 </a>
                             
                             
@@ -610,8 +727,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Image-Data-Processing-and-Augmentation/">
-                        <span class="chip bg-color">Image Data Processing and Augmentation</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/DFS/">
+                        <span class="chip bg-color">DFS</span>
                     </a>
                     
                 </div>
