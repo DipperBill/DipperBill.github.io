@@ -359,7 +359,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
-                    2023-04-10
+                    2023-10-19
                 </div>
                 
 
@@ -517,6 +517,37 @@ jihe <span class="token operator">=</span> <span class="token builtin">set</span
         maxl <span class="token operator">=</span> end <span class="token operator">-</span> start
     
 <span class="token keyword">return</span> maxl</code></pre>
+
+<h3 id="Best-Bundle"><a href="#Best-Bundle" class="headerlink" title="Best Bundle"></a>Best Bundle</h3><p>An equipment supplier wants to bundle items that are ordered frequently and repeatedly together. Assume the orders from a customer are placed as AABCBAABD, the supplier wants to know that is the longest continuous ordering sequence that has each item ordered at least k times.<br>For example, if k &#x3D; 2 and orders were AABCBAABD, the longest ordering sequence will be BAAB. In case there are multiple sequences with the same length that all satisfy the requirement, return the result as a sorted list of strings with alphabetical ascending order.<br>lf there is no such sequence that each item was ordered at least k times, return an empty array []</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">best_bundle</span><span class="token punctuation">(</span>orders<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Write your code here</span>
+    dic <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> c <span class="token keyword">in</span> orders<span class="token punctuation">:</span>
+        dic<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> dic<span class="token punctuation">.</span>get<span class="token punctuation">(</span>c<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+    word <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    n <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>orders<span class="token punctuation">)</span>
+    res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    left <span class="token operator">=</span> <span class="token number">0</span>
+    right <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">while</span> right <span class="token operator">&lt;</span> n<span class="token punctuation">:</span>
+        tmp <span class="token operator">=</span> orders<span class="token punctuation">[</span>right<span class="token punctuation">]</span>
+        word<span class="token punctuation">[</span>tmp<span class="token punctuation">]</span> <span class="token operator">=</span> word<span class="token punctuation">.</span>get<span class="token punctuation">(</span>tmp<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+        right <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token keyword">while</span> left <span class="token operator">&lt;=</span> right <span class="token keyword">and</span> <span class="token builtin">any</span><span class="token punctuation">(</span>dic<span class="token punctuation">.</span>get<span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> k <span class="token keyword">for</span> c <span class="token keyword">in</span> word<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            word<span class="token punctuation">[</span>orders<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">-=</span> <span class="token number">1</span>
+            <span class="token keyword">if</span> word<span class="token punctuation">[</span>orders<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                <span class="token keyword">del</span> word<span class="token punctuation">[</span>orders<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">]</span>
+            left <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token keyword">if</span> <span class="token builtin">all</span><span class="token punctuation">(</span>word<span class="token punctuation">.</span>get<span class="token punctuation">(</span>c<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> k <span class="token keyword">for</span> c <span class="token keyword">in</span> word<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>orders<span class="token punctuation">[</span>left<span class="token punctuation">:</span>right<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token keyword">not</span> res<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    maxlength <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">for</span> s <span class="token keyword">in</span> res<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token builtin">sorted</span><span class="token punctuation">(</span><span class="token punctuation">[</span>s <span class="token keyword">for</span> s <span class="token keyword">in</span> res <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">==</span> maxlength<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+a <span class="token operator">=</span> <span class="token string">'AABCBAABDECCDDD'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>best_bundle<span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 
 
                 
